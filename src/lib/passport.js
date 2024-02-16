@@ -3,7 +3,6 @@ import passport_local from 'passport-local';
 import cloudinary from 'cloudinary';
 import pool from '../db.js';
 import helpers from './helpers.js';
-import multer from 'multer';
 
 const LocalStrategy = passport_local.Strategy
 
