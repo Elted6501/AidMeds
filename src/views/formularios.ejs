@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Forms</title>
+
+  <%- include("partials/headlist") %>
+    <%- include("partials/head") %>
+
+</head>
+
+<body>
+  <%- include("partials/navigationnorth") %>
+
+    <% if (user.id_hospital) { %>
+      <!-- Main content -->
+      <div class="mt-16 mb-16">
+        <div
+          class="p-4 bg-white block mx-2 rounded-lg sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
+          <div class="w-full mb-1">
+            <div class="mb-4">
+              <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All forms</h1>
+            </div>
+            <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
+              <div class="flex items-center mb-4 sm:mb-0">
+                <form class="sm:pr-3" action="#" method="GET">
+                  <label for="products-search" class="sr-only">Search ID</label>
+                  <div class="relative w-48 mt-1 sm:w-64 xl:w-96">
+                    <input type="text" name="email" id="products-search"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Search">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-16 mb-8 flex flex-col">
+          <div class="overflow-x-auto">
+            <div class="inline-block min-w-full align-middle">
+              <div class="mx-2 border dark:border-gray-600 rounded-lg overflow-hidden shadow">
+
+                <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                  <thead class="bg-gray-100 dark:bg-gray-700">
+
+                    <tr>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Id
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Medicine
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Description
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Lot
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Expiration date
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Grams
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Quantity
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Creation date
+                      </th>
+                      <th scope="col"
+                        class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                        Actions
+                      </th>
+                    </tr>
+
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+
+                    <% forms.forEach(function(form){ %>
+                      <tr>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.id_formulario %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.medicamento %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 dark:text-white">
+                          <%= form.descripcion %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.lote %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.caducidad %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.mgramos %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.cantidad %>
+                        </td>
+                        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          <%= form.created_at %>
+                        </td>
+                        <td class="p-4 space-x-2 whitespace-nowrap">
+                          <a href="/update/check/<%= form.id_formulario %>"
+                            class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70">
+                            Check
+                          </a>
+                          <a href="/update/reject/<%= form.id_formulario %>"
+                            class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70">
+
+                            Reject
+                          </a>
+                          <a href="<%= form.rutaimg %>"
+                            class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70">
+                            Image
+                          </a>
+                        </td>
+                      </tr>
+                      <% }); %>
+
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% } else { %>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <% } %>
+
+          <br>
+          <br>
+          <br>
+          <%- include("partials/navigationsouth") %>
+</body>
+
+</html>

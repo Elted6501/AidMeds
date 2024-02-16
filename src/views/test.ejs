@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testimonials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/estilos.css" />
+  <link rel="stylesheet" href="/dist/output.css">
+</head>
+
+<body class="font-principal">
+  <!--Logo-->
+  <header>
+    <nav class="wrapper h-20 flex items-center justify-between">
+      <a href="/" class="w-12 max-w-[140px]">
+        <img src="/images/LogoAid.png" class="w-full" />
+      </a>
+      <!--Fin logo-->
+
+      <input type="checkbox" id="menu" class="peer hidden" />
+
+      <label for="menu"
+        class="bg-open-menu w-6 h-5 bg-cover bg-center cursor-pointer peer-checked:bg-close-menu transition-all z-50 md:hidden"></label>
+      <!--Agregar mas espaciado entre las opciones-->
+      <div
+        class="fixed inset-0 bg-gradient-to-b from-white/70 to-black/70 translate-x-full peer-checked:translate-x-0 transition-transform z-40 md:static md:bg-none md:translate-x-0">
+        <ul
+          class="absolute inset-x-0 top-24 p-12 bg-white w-[90%] mx-auto rounded-md h-max text-center grid gap-6 font-bold text-dark-blue shadow-2xl md:w-max md:bg-transparent md:p-0 md:grid-flow-col md:static">
+          <li>
+            <a href="/">Home</a>
+          </li>
+
+          <li>
+            <a href="/service">
+              Policy
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <a href="/login" class="button shadow-slate-300 hidden py-3 lg:block">Login</a>
+    </nav>
+    <!--Fin-->
+    <section class="wrapper grid gap-12 justify-items-center items-center pb-12 md:grid-cols-2 md:py-24">
+      <img src="images\cerrar-personas-sosteniendo-caja.jpg" class="w-auto max-content_max-content md:order-1" />
+
+      <article class="text-center -space-y-10 md:text-left md:space-y-8">
+        <h1 class="text-2xl font-bold text-very-dark-blue md:text-5xl">
+          Working for a better place, where we all have the same opportunities
+        </h1>
+        <br>
+        <br>
+        <p class="text-dark-grayish-blue">
+          Manage makes it simple for software teams to plan day-to-day tasks
+          while keeping the larger team goals in view.
+        </p>
+      </article>
+    </section>
+    <!--Fin-->
+
+    <!----------------------------------Fin superior----------------------------->
+    <br>
+    <br>
+    <!----------------------------------Carrusel----------------------------->
+    <div id="default-carousel" class="relative w-auto" data-carousel="slide">
+      <!-- Carousel wrapper -->
+      <div class="relative h-44 overflow-hidden rounded-lg md:h-96">
+        <!-- Item 1 -->
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <span
+            class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl">Primer
+            Slide</span>
+          <img src="images\Imagen de WhatsApp 2023-10-04 a las 18.55.03.jpg"
+            class="block absolute top-1/2 left-1/2 w-auto -translate-x-1/2 -translate-y-1/2" alt="..." />
+        </div>
+
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img
+            src="images/covid-19-trabajadores-salud-concepto-pandemia-hermosa-solicita-medico-asiatico-enfermera-matorrales-mostrando-gesto-corazon-sonriendo-cuidando-pacientes-amor-fondo-blanco.jpg"
+            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+        </div>
+
+        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+          <img
+            src="images\doctora-morena-sonriente-sosteniendo-tableta-digital-apuntandose-si-misma-cara-amistosa-suplente.jpg"
+            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+        </div>
+      </div>
+
+      <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
+        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 1"
+          data-carousel-slide-to="0"></button>
+        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
+          data-carousel-slide-to="1"></button>
+        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
+          data-carousel-slide-to="2"></button>
+      </div>
+
+      <button type="button"
+        class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
+        data-carousel-prev>
+        <span
+          class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+          <svg class="w-5 h-5 text-white sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          <span class="hidden">Anterior</span>
+        </span>
+      </button>
+      <button type="button"
+        class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none"
+        data-carousel-next>
+        <span
+          class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 0 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+          <svg class="w-5 h-5 text-white sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+          <span class="hidden">Siguiente</span>
+        </span>
+      </button>
+    </div>
+    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+    </div>
+
+
+    <!-- Palabras usuarios-->
+    <section class="wrapper justify-items-center items-center py-24 max-w-lg mx-auto md:max-w-xl">
+      <p id="test" class="text-3xl font-bold text-very-dark-blue md:text-3sxl">
+        Testimonials
+        </h2>
+
+      <div class="mt-2 mb-14">
+        <article class=" py-16 px-1 relative">
+
+
+          <h1 class="text-xl mb-4x pt-2 font-bold text-very-dark-blue">
+            Demi Lovato
+          </h1>
+          <br>
+          <p class="text-dark-grayish-blue">
+            When I saw about this site, I thought that it was just another scam site,
+            that they would use the user's information for personal benefits and that they would misuse the donated
+            medicines.
+          </p>
+          <br>
+
+          <!-- Desplegable-->
+          <details>
+            <summary class="text-gray-800 mb-4x pt-2  text-very-dark-blue">Read more</summary>
+            <br>
+            <div>
+              <p class="text-dark-blue">But I decided to trust the site and I was surprised to find that the site is
+                totally safe,
+                reliable and that it really supports the cause of not wasting medicines and giving a chance to those
+                hospitals that do not have enough material to support their patients.
+                the problem of the hospitals is that sometimes they don't have enough medicines to be able to give the
+                necessary support to their patients, so, this page promises to help the hospitals with a medicine
+                donation service so they can give themselves the necessary supply and be able to support their clients
+                with the medicines they need, as a hospital user, I was worried about the issue of "how safe can they
+                be? "So I decided to make use of the services of the page and I was amazed, the medicines are examined
+                after the user makes a survey and verifies that the medicines are in a good condition.
+                After these processes and the approval of the administrators of the page, the medicines are sent to
+                hospitals to be used and given to the patients of the hospitals.</p>
+            </div>
+          </details>
+          <!--Fin detalles-->
+        </article>
+      </div>
+
+      <!--Fin-->
+      <!--2 -->
+
+
+      <h1 class="text-xl mb-4x pt-2 font-bold text-very-dark-blue">
+        Ali Bravo
+      </h1>
+      <br>
+      <p class="text-dark-grayish-blue">
+        “We have been able to cancel so many other subscriptions since
+        using Manage. There is no more cross-channel confusion and
+        everyone is much more focused. We have been able to cancel so many other subscriptions since
+        using Manage. There is no more cross-channel confusion and
+        everyone is much more focused. We have been able to cancel so many other subscriptions since
+        using Manage. There is no more cross-channel confusion and
+        everyone is much more focused. We have been able to cancel so many other subscriptions since
+        using Manage. There is no more cross-channel confusion and
+        everyone is much more focused”
+      </p>
+      <br>
+
+      <!-- Desplegable-->
+      <details>
+        <summary class="text-gray-800 mb-4x pt-2  text-very-dark-blue">Read more</summary>
+        <br>
+        <div>
+          <p class="text-dark-blue">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem ad
+            dignissimos autem voluptates quo vel perferendis sapiente expedita, deleniti mollitia alias natus, ipsum
+            voluptatem adipisci obcaecati ullam, repellat beatae reprehenderit assumenda excepturi dolor fuga
+            doloremque. Commodi aut nihil mollitia quod reprehenderit tempora odit ex voluptate porro et. Nesciunt
+            excepturi quos vero ullam ipsam esse fugiat vel consequuntur deleniti? Explicabo alias at quae eius labore,
+            vero a laboriosam vel dignissimos quia? Aliquam amet reiciendis, nulla recusandae excepturi nam non! Ad
+            voluptatibus unde vel iusto amet necessitatibus assumenda delectus? Unde quas consectetur quisquam fuga,
+            sunt accusantium ab, error nam reiciendis ea est.
+          </p>
+        </div>
+      </details>
+      <!--Fin detalles-->
+      </article>
+      </div>
+    </section>
+    <!--Fin-->
+    <!----------------------------------Footer----------------------------->
+
+    </section>
+    </main>
+
+    <footer class="bg-very-dark-blue py-24">
+      <section
+        class="wrapper grid gap-12 justify-items-center footer-area md:footer-area-md md:grid-cols-3 md:justify-items-stretch">
+
+
+        <nav
+          class="grid grid-cols-[max-content_max-content] gap-y-4 justify-between text-white w-4/5 [grid-area:navigation] md:w-full">
+          <a href="/">Home</a>
+          <a href="#about">About Us</a>
+          <a href="#test">Testimonial</a>
+          <a href="/service">Privacy Policy</a>
+        </nav>
+
+
+
+        <a href="/" class="w-1/3 w-full[140px]">
+          <img src="/images/LogoAid.png" class="" />
+        </a>
+
+        <p class="text-dark-grayish-blue text-center [grid-area:copy] md:text-right">
+          Copyright 2023. All Rights Reserved
+        </p>
+      </section>
+    </footer>
+</body>
+
+</html>

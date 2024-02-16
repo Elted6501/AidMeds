@@ -1,0 +1,29 @@
+<% if ( message.length !== 0 ) { %>
+  <div class="text-white px-6 py-4 border-0 rounded relative mb-2 bg-red-500">
+    <span class="inline-flex items-center">
+      <svg class="w-[17px] h-[17px] fill-[#ffffff] mr-2" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z">
+        </path>
+      </svg>
+      <%= message %>
+    </span>
+    <button
+      class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none" onclick="closeAlert(event)">
+      <span>×</span>
+    </button>
+  </div>
+
+  <script>
+    function closeAlert(event) {
+      let element = event.target;
+      while (element.nodeName !== "BUTTON") {
+        element = element.parentNode;
+      }
+      element.parentNode.parentNode.removeChild(element.parentNode);
+    }
+  </script>
+
+  <% } %>
+
+  

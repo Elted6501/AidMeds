@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>History</title>
+
+  <%- include("partials/headlist") %>
+    <%- include("partials/head") %>
+
+</head>
+
+<body>
+  <%- include("partials/navigationnorth") %>
+
+    <main>
+      <h1 class="text-2xl font-bold text-center">History of donations made</h1>
+      <p
+        class="text-center block p-2 text-sm text-gray-400 transition-colors duration-200 rounded-md dark:hover:text-light hover:text-gray-700">
+        Here you can review the donations made and their specifications.
+      </p>
+      
+    </main>
+
+    <main>
+      <div>
+        <section class="container px-4 mx-auto">
+          <div class="flex flex-col mt-6">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 px-7 align-middle md:px-6 lg:px-8">
+                <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                  <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                      <tr>
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Medicine
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Hospital
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Lot
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Expiration date
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Grams
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Quantity
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Creation date
+                        </th>
+
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                          Status
+                        </th>
+                        
+                        <th scope="col"
+                          class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+                      <% history.forEach(function(his){ %>
+                        <tr class="border dark:border-gray-600">
+                          <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                            <div>
+                              <h2 class="font-medium text-gray-800 dark:text-white">
+                                <%= his.medicamento %>
+                              </h2>
+                            </div>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.hospital %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.lote %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.caducidad %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.mgramos %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.cantidad %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.created_at %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                            <h4 class="text-gray-700 dark:text-gray-200">
+                              <%= his.estatus %>
+                            </h4>
+                          </td>
+
+                          <td class="px-4 py-4 text-sm whitespace-nowrap">
+                          <a href="/user/donaciones/<%= his.id_formulario %>/confirmacion/"
+                              class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70">
+                              Confirmation
+                            </a>
+                          </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <%- include("partials/navigationsouth") %>
+</body>
+
+</html>

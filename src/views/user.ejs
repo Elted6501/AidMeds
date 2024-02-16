@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>User</title>
+
+  <%- include("partials/head") %>
+
+</head>
+
+<body>
+  <%- include("partials/navigationnorth") %>
+
+
+    <section class="wrapper gap-8 justify-items-center items-center pb-12 md:grid-cols-2 md:py-24">
+      <div class="container">
+        <div class="wow fadeInUp " data-wow-delay=".2s">
+          <div class="-mx-4 flex flex-wrap">
+            <div class="w-full px-4">
+              <div
+                class="items-center bg-white justify-between overflow-hidden rounded-lg lg:flex dark:bg-darker dark:border-primary-darker">
+
+                <section class="wrapper grid justify-items-center md:grid-cols-2 ">
+                  <img src="\images\dashboard.jpg" class="" />
+                  <article class="text-center -space-y-10 md:text-left md:space-y-8">
+                    <div
+                      class="mt-8 mb-6 w-full px-7 py-4 sm:px-12 md:p-16 lg:max-w-[565px] lg:py-9 lg:px-16 xl:max-w-[640px] xl:p-[70px]">
+                      <span
+                        class="inline-block py-2 px-4 rounded-full bg-gray-200 text-gray-500 border text-xs font-semibold tracking-widest">
+                        New Post
+                      </span>
+                    </div>
+
+                    <h1 class="px-4 mb-6 text-2xl font-bold text-very-dark-blue md:text-5xl">
+                      Working for a better place, where we all have the same opportunities
+                    </h1>
+
+                    <p class="px-4 text-dark-grayish-blue">
+                      When making donations of any type of product you can always find dishonest and cruel people
+                      who donate items that could affect others, this happens due to the bad actions of donors, but
+                      also due to poor prevention measures that companies dedicated to this type of services.
+                    </p>
+
+                    <div class="mt-8 mb-8">
+                      <a
+                        class="text-white linear rounded-md bg-blue-500 px-4 py-2 text-center text-base font-bold transition duration-200 hover:!bg-white/80 active:!bg-white/70">
+                        Discover now
+                      </a>
+                    </div>
+
+                  </article>
+                </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex flex-wrap flex-row -mx-4 text-center">
+      <div class="flex-shrink px-4 max-w-full w-full sm:w-1/2 lg:w-1/3 lg:px-6 wow fadeInUp" data-wow-duration="1s"
+        style="visibility: visible; animation-duration: 1s; animation-name: fadeInUp;">
+        <!-- service block -->
+        <div
+          class="py-8 px-12 mb-12 bg-gray-50 border-gray-100 transform transition duration-300 ease-in-out hover:-translate-y-2">
+          <div class="inline-block text-gray-900 mb-4">
+            <!-- icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-10 h-10">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+          </div>
+          <h3 class="text-lg leading-normal mb-2 font-semibold text-black">Acciones</h3>
+          <p class="text-gray-500">In these cards you will find the available actions.</p>
+        </div>
+        <!-- end service block -->
+
+        <% if ( user.id_hospital ) { %>
+
+          <div class="grid grid-cols-1 grid-rows-1 md:grid-cols-2">
+            <div
+              class="ml-2 mr-2 mb-4 rounded-lg bg-white justify-items-center dark:bg-darker dark:border-primary-darker">
+              <div class="p-12">
+                <h5 class="mb-8 mt-4 text-2xl
+                   font-normal leading-tight text-neutral-800 dark:text-neutral-50">
+                  Inventory
+                  <br>
+                  <br>
+                  <a href="/user/inventario"
+                    class="text-white linear rounded-md bg-blue-500 px-4 py-2 text-center text-base font-bold transition duration-200 hover:!bg-white/80 active:!bg-white/70"
+                    data-te-ripple-init="" data-te-ripple-color="light">
+                    Enter
+                  </a>
+                </h5>
+              </div>
+            </div>
+
+            <div
+              class="ml-2 mr-2 mb-4 rounded-lg bg-white justify-items-center dark:bg-darker dark:border-primary-darker">
+              <div class="p-12">
+                <h5 class="mb-8 mt-4 text-2xl
+                   font-normal leading-tight text-neutral-800 dark:text-neutral-50">
+                  Forms
+                  <br>
+                  <br>
+                  <a href="/user/formularios"
+                    class="text-white linear rounded-md bg-blue-500 px-4 py-2 text-center text-base font-bold transition duration-200 hover:!bg-white/80 active:!bg-white/70"
+                    data-te-ripple-init="" data-te-ripple-color="light">
+                    Enter
+                  </a>
+                </h5>
+              </div>
+            </div>
+          </div>
+          
+          <% } else {%>
+
+            <div class="grid grid-cols-1  grid-rows-1 md:grid-cols-12">
+              <div class="rounded-lg bg-white justify-items-center dark:bg-darker dark:border-primary-darker">
+                <div>
+                  <h4 class="mb-7 mt-4 text-12 font-semibold leading-tight text-neutral-800 dark:text-neutral-50">
+                    Donations
+                    <br>
+                    <br>
+                    <a href="/user/donaciones"
+                      class="text-white linear rounded-md bg-blue-500 px-4 py-2 text-center text-base font-bold transition duration-200 hover:!bg-white/80 active:!bg-white/70"
+                      data-te-ripple-init="" data-te-ripple-color="light">
+                      Enter
+                    </a>
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            <% } %>
+
+      </div>
+    </div>
+
+    <%- include("partials/navigationsouth") %>
+</body>
+
+</html>
