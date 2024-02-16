@@ -78,7 +78,6 @@ passport.use('local.signup', new LocalStrategy({
         }
     } else {
         done(null, false, req.flash('message', 'File was not supported'));
-        console.log(req.file)
     }
 }));
 
