@@ -628,7 +628,7 @@
     const fileInput = document.getElementById("rutaine");
     const fileError = document.getElementById("fileError");
 
-    if (!fileInput.files || fileInput.files.length === 0) {
+    if (!fileInput.file || fileInput.file.length === 0) {
       fileError.classList.remove("hidden");
     } else {
       fileError.classList.add("hidden");
