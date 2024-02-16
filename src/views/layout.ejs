@@ -12,182 +12,213 @@
 <body>
   <!--Como ponerle titulo sin que se me desconfigure todo-->
   <div class="formbold-main-wrapper">
-
     <!-------------------------------Parametros------------------------------->
     <div class="formbold-form-wrapper">
       <form action="/signup" method="post" enctype="multipart/form-data">
         <%- include('partials/message') %>
-        <div class="formbold-steps">
-          <ul>
-            <li class="formbold-step-menu1 active">
-              <span>1</span>
-              Personal
-            </li>
-            <li class="formbold-step-menu2">
-              <span>2</span>
-              Documents
-            </li>
-            <li class="formbold-step-menu3">
-              <span>3</span>
-              Confirm
-            </li>
-          </ul>
-        </div>
-        <!-------------------------------Fin Parametros------------------------------->
-        <!-------------------------------inicio Primera parte Datos personales------------------------------->
-        <div class="formbold-form-step-1 active">
-          <div class="formbold-input-flex">
-            <div>
-              <label for="name" class="formbold-form-label">
-                First name
-              </label>
-              <input type="text" name="name" placeholder="Andrio"
-                onkeypress="return (event.charCode == 32 || event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
-                id="name" class="formbold-form-input" required />
-            </div>
-            <div>
-              <label for="lastname" class="formbold-form-label">
-                Last name
-              </label>
-              <input type="text" name="lastname" placeholder="Dolee"
-                onkeypress="return (event.charCode == 32 || event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
-                id="lastname" class="formbold-form-input" required />
+          <div class="formbold-steps">
+            <ul>
+              <li class="formbold-step-menu1 active">
+                <span>1</span>
+                Personal
+              </li>
+              <li class="formbold-step-menu2">
+                <span>2</span>
+                Documents
+              </li>
+              <li class="formbold-step-menu3">
+                <span>3</span>
+                Confirm
+              </li>
+            </ul>
+          </div>
+          <!-------------------------------Fin Parametros------------------------------->
+          <!-------------------------------inicio Primera parte Datos personales------------------------------->
+          <div class="formbold-form-step-1 active">
+            <div class="formbold-input-flex">
+              <div>
+                <label for="name" class="formbold-form-label"> Name </label>
+                <input type="text" name="name" placeholder="Andrio" id="nameInput" onblur="notNullname()"
+                  onkeydown="checkTab(event)" class="formbold-form-input" required />
+                <!-- Mensaje de error si el campo está vacío -->
+                <p id="nameErrores" class="text-red-500 text-xs mt-1 hidden">
+                  Please enter a valid Name.
+                </p>
+              </div>
+              <div>
+                <label for="lastname" class="formbold-form-label">
+                  Last name
+                </label>
+                <input type="text" name="lastname" placeholder="Dolee" id="lastnameInput" onblur="notNullLastname()"
+                  onkeydown="checkTab(event)" class="formbold-form-input" required />
+                <!-- Mensaje de error si el campo está vacío -->
+                <p id="lastnameErrores" class="text-red-500 text-xs mt-1 hidden">
+                  Please enter a valid lastname.
+                </p>
+              </div>
+
+              <div>
+                <label for="tel" class="formbold-form-label">Phone Number</label>
+                <input type="tel" name="tel" placeholder="10 Digits" id="phoneInput" class="formbold-form-input"
+                  onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" maxlength="10" required
+                  onchange="validatePhone()" onkeydown="checkTab(event)" />
+                <!-- Mensaje de error si el número no es válido -->
+                <p id="phoneError" class="text-red-500 text-xs mt-1 hidden">
+                  Please enter a valid number.
+                </p>
+              </div>
             </div>
 
-            <div>
-              <label for="tel" class="formbold-form-label">
-                Phone Number
-              </label>
-              <input type="tel" name="tel" placeholder="10 Digits" id="tel" class="formbold-form-input"
-                onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" minlength="10" maxlength="10" required />
-            </div>
-          </div>
+            <div class="formbold-input-flex">
+              <div>
+                <label for="curp" class="formbold-form-label"> CURP </label>
+                <input type="text" name="curp" id="curp" placeholder="18 digits"
+                  onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
+                  onblur="validateCurp()" onfocus="clearCurpError()" class="formbold-form-input" required />
+                <p id="curpError" class="text-red-500 text-xs mt-1 hidden">
+                  Please enter a valid CURP with 18 characters.
+                </p>
+              </div>
 
-          <div class="formbold-input-flex">
-            <div>
-              <label for="curp" class="formbold-form-label"> CURP </label>
-              <input type="text" name="curp" id="curp" placeholder="18 digits"
-                onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57))"
-                minlength="18" maxlength="18" class="formbold-form-input" required />
+              <div>
+                <label for="municipio" class="formbold-form-label">
+                  Municipio
+                </label>
+                <select type="text" name="municipio" id="municipio" placeholder="Delicias" class="formbold-form-input"
+                  required>
+                  <% municipio.forEach(function(muni){ %>
+                    <option>
+                      <%= muni.name %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
             </div>
+            <br />
             <div>
-              <label for="municipio" class="formbold-form-label"> Municipio </label>
-              <select type="text" name="municipio" id="municipio" placeholder="Delicias" class="formbold-form-input"
-                required>
-                <% municipio.forEach(function(muni){ %>
-                  <option>
-                    <%= muni.name %>
-                  </option>
-                  <% }); %>
-              </select>
-            </div>
-          </div>
-          <br />
-          <div>
-            <label for="direcc" class="formbold-form-label"> Address </label>
-            <input type="text" name="direcc" id="direcc" placeholder="Flat 4, 24 Castle Street, Perth, PH1 3JY"
-              class="formbold-form-input" required />
-          </div>
-          <br>
-          <div>
-            <label for="email" class="formbold-form-label"> Email </label>
-            <input type="email" name="email" id="email" placeholder="example@gmail.com" class="formbold-form-input"
-              required />
-          </div>
-          <br>
-          <div>
-            <label for="password" class="formbold-form-label"> Password </label>
-            <input type="password" name="password" id="password"
-              placeholder="Minimum 8-digit password, containing special characters and numbers"
-              class="formbold-form-input" required />
-            <br>
-          </div>
-        </div>
-        <!-------------------------------Fin Primera parte Datos personales------------------------------->
-        <div class="formbold-form-step-2">
-          <div>
-            <label for="rutaine" class="formbold-form-label"> Documents </label>
-            <div class="formbold-form-confirm">
-              <p>
-                Upload a photo of your ine of principal side.
-                <br>
-                Allowed documents: ".png" and ".jpg"
+              <label for="direcc" class="formbold-form-label">Address</label>
+              <input type="text" name="direcc" id="addressInput" placeholder="Flat 4, 24 Castle Street, Perth, PH1 3JY"
+                class="formbold-form-input" required oninput="validateAddress()" onkeydown="checkTabOrClick(event)" />
+              <!-- Mensaje de error si la dirección no es válida -->
+              <p id="addressError" class="text-red-500 text-xs mt-1 hidden">
+                Address field cannot be empty.
               </p>
             </div>
-            </label>
-            <input type="file" name="img" id="img" accept="image/*"  class="formbold-form-input" required />
-          </div>
-        </div>
+            <br />
+            <div class="mb-4">
+              <label for="email" class="formbold-form-label">Email</label>
+              <input type="email" name="email" id="emailErrores" onblur="validateEmail()"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                placeholder="You@example.com" />
+              <!-- Mensaje de error si el correo electrónico no es válido -->
+              <p id="emailError" class="text-red-500 text-xs mt-1 hidden">
+                Please enter a valid email address.
+              </p>
+            </div>
 
-        <!-- Fin segunda parte-->
-        <div class="formbold-form-step-3">
-          <div class="formbold-form-confirm">
-            <p>
-              You agree to the terms and conditions of the site,
-              and we reserve the right to use the data provided above.
-            </p>
-
+            <br />
             <div>
-              <button class="formbold-confirm-btn active">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC" />
-                  <g clip-path="url(#clip0_1667_1314)">
-                    <path
-                      d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z"
-                      fill="#536387" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1667_1314">
-                      <rect width="14" height="14" fill="white" transform="translate(4 4)" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                Yes! I agree.
-              </button>
-
-              <button class="formbold-back-btn-term active">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC" />
-                  <g clip-path="url(#clip0_1667_1314)">
-                    <path
-                      d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z"
-                      fill="#536387" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_1667_1314">
-                      <rect width="14" height="14" fill="white" transform="translate(4 4)" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                No! Back.
-              </button>
+              <label for="Password" class="formbold-form-label">Password</label>
+              <input type="password" name="password" id="password" onchange="validatePass()"
+                onkeydown="checkTabOrClick(event)"
+                onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
+                minlength="8" maxlength="20" placeholder="Minimum 8-digit password" class="formbold-form-input"
+                required />
+              <!-- Mensaje de error si la contraseña no es válida -->
+              <p id="passErrorText" class="text-red-500 text-xs mt-1 hidden">
+                Please enter a valid password.
+              </p>
+              <br />
             </div>
           </div>
-        </div>
+          <!-------------------------------Fin Primera parte Datos personales------------------------------->
+          <div class="formbold-form-step-2">
+            <div>
+              <label for="rutaine" class="formbold-form-label">Documents</label>
+              <div class="formbold-form-confirm">
+                <p>
+                  Upload a photo of your INE.
+                  <br />
+                  Allowed documents: ".png" and ".jpg"
+                </p>
+              </div>
+              <input type="file" name="img" id="rutaine" class="formbold-form-input" onchange="validateFile()"
+                required />
+              <!-- Mensaje de error si el campo está vacío -->
+              <p id="fileError" class="text-red-500 text-xs mt-1 hidden">
+                Please upload a document.
+              </p>
+            </div>
+          </div>
 
-        <!--Button Next-->
-        <div class="formbold-form-btn-wrapper">
-          <button class="formbold-back-btn">Back</button>
+          <!-- Fin segunda parte-->
+          <div class="formbold-form-step-3">
+            <div class="formbold-form-confirm">
+              <p>
+                You agree to the terms and conditions of the site, and we
+                reserve the right to use the data provided above.
+              </p>
 
-          <button class="formbold-btn">
-            Next Step
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_1675_1807)">
-                <path
-                  d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z"
-                  fill="white" />
-              </g>
-              <defs>
-                <clipPath id="clip0_1675_1807">
-                  <rect width="16" height="16" fill="white" />
-                </clipPath>
-              </defs>
-            </svg>
-          </button>
-        </div>
+              <div>
+                <button class="formbold-confirm-btn active">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC" />
+                    <g clip-path="url(#clip0_1667_1314)">
+                      <path
+                        d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z"
+                        fill="#536387" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_1667_1314">
+                        <rect width="14" height="14" fill="white" transform="translate(4 4)" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  Yes! I I agree.
+                </button>
+
+                <button class="formbold-back-btn-term active">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="10.5" fill="white" stroke="#DDE3EC" />
+                    <g clip-path="url(#clip0_1667_1314)">
+                      <path
+                        d="M9.83343 12.8509L15.1954 7.48828L16.0208 8.31311L9.83343 14.5005L6.12109 10.7882L6.94593 9.96336L9.83343 12.8509Z"
+                        fill="#536387" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_1667_1314">
+                        <rect width="14" height="14" fill="white" transform="translate(4 4)" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  No! Back.
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!--Button Next-->
+          <div class="formbold-form-btn-wrapper">
+            <button class="formbold-back-btn">Back</button>
+
+            <button class="formbold-btn">
+              Next Step
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1675_1807)">
+                  <path
+                    d="M10.7814 7.33312L7.20541 3.75712L8.14808 2.81445L13.3334 7.99979L8.14808 13.1851L7.20541 12.2425L10.7814 8.66645H2.66675V7.33312H10.7814Z"
+                    fill="white" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1675_1807">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          </div>
       </form>
       <!--Fin Button Next-->
-
     </div>
   </div>
 </body>
@@ -424,8 +455,7 @@
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
   }
 </style>
-<!--Fin de CSS-->
-<!--JavaScript-->
+
 <script>
   const stepMenuOne = document.querySelector(".formbold-step-menu1");
   const stepMenuTwo = document.querySelector(".formbold-step-menu2");
@@ -439,6 +469,171 @@
   const formBackBtnTerm = document.querySelector(".formbold-back-btn-term");
   const formBackBtn = document.querySelector(".formbold-back-btn");
 
+  //valida email
+  function validateEmail() {
+    const emailInput = document.getElementById("emailErrores");
+    const emailError = document.getElementById("emailError");
+    const inputValue = emailInput.value.trim();
+
+    if (!inputValue) {
+      emailError.textContent = "Email field cannot be empty.";
+      emailError.classList.remove("hidden");
+    } else {
+      const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        inputValue
+      );
+
+      if (!isValid) {
+        emailError.textContent = "Please enter a valid email address.";
+        emailError.classList.remove("hidden");
+      } else {
+        emailError.classList.add("hidden");
+      }
+    }
+  }
+
+  function checkTabOrClick(event) {
+    if (event.key === "Tab" || event.type === "click") {
+      validateEmail();
+    }
+  }
+
+  // nulos name
+  function notNullname() {
+    const nameInput = document.getElementById("nameInput");
+    const nameError = document.getElementById("nameErrores");
+    const inputValue = nameInput.value.trim();
+
+    if (inputValue === "" || !/^[a-zA-Z]{3,}$/.test(inputValue)) {
+      nameError.classList.remove("hidden");
+    } else {
+      nameError.classList.add("hidden");
+    }
+  }
+
+  function checkTab(event) {
+    if (event.key === "Tab") {
+      notNullname();
+    }
+  }
+  // nulos lastname
+  function notNullLastname() {
+    const lastnameInput = document.getElementById("lastnameInput");
+    const lastnameError = document.getElementById("lastnameErrores");
+    const inputValue = lastnameInput.value.trim();
+
+    if (inputValue === "" || !/^[a-zA-Z]{3,}$/.test(inputValue)) {
+      lastnameError.classList.remove("hidden");
+    } else {
+      lastnameError.classList.add("hidden");
+    }
+  }
+
+  function checkTab(event) {
+    if (event.key === "Tab") {
+      notNullLastname();
+    }
+  }
+
+  //VALITE CURP
+  function validateCurp() {
+    const curpInput = document.getElementById("curp");
+    const curpError = document.getElementById("curpError");
+    const curpValue = curpInput.value.trim();
+
+    if (curpValue.length !== 18) {
+      curpError.classList.remove("hidden");
+      curpInput.classList.add("error");
+      curpInput.focus();
+      return false;
+    } else {
+      curpError.classList.add("hidden");
+      curpInput.classList.remove("error");
+    }
+
+    return true;
+  }
+
+  function clearCurpError() {
+    const curpError = document.getElementById("curpError");
+    const curpInput = document.getElementById("curp");
+
+    curpError.classList.add("hidden");
+    curpInput.classList.remove("error");
+  }
+
+  //valite address
+  function validateAddress() {
+    const addressInput = document.getElementById("addressInput");
+    const addressError = document.getElementById("addressError");
+    const inputValue = addressInput.value.trim();
+
+    if (!inputValue) {
+      addressError.textContent = "Address field cannot be empty.";
+      addressError.classList.remove("hidden");
+    } else {
+      addressError.classList.add("hidden");
+    }
+  }
+
+  function checkTabOrClick(event) {
+    if (event.key === "Tab" || event.type === "click") {
+      validateAddress();
+    }
+  }
+  //valida password
+  function validatePass() {
+    const passInput = document.getElementById("password");
+    const passError = document.getElementById("passErrorText");
+    const inputValue = passInput.value;
+    const isValid = /^[\s\S]{8,20}$/.test(inputValue);
+
+    if (!isValid) {
+      passError.classList.remove("hidden");
+    } else {
+      passError.classList.add("hidden");
+    }
+  }
+
+  function checkTabOrClick(event) {
+    if (
+      (event.key === "Tab" || event.type === "click") &&
+      !document.getElementById("password").value.trim()
+    ) {
+      alert("Password field cannot be empty.");
+    }
+  }
+  //valida phone
+  function validatePhone() {
+    const phoneInput = document.getElementById("phoneInput");
+    const phoneError = document.getElementById("phoneError");
+    const inputValue = phoneInput.value.trim();
+
+    if (inputValue === "" || !/^\d{10}$/.test(inputValue)) {
+      phoneError.classList.remove("hidden");
+    } else {
+      phoneError.classList.add("hidden");
+    }
+  }
+
+  function checkTab(event) {
+    if (event.key === "Tab") {
+      validatePhone();
+    }
+  }
+
+  //documents
+  function validateFile() {
+    const fileInput = document.getElementById("rutaine");
+    const fileError = document.getElementById("fileError");
+
+    if (!fileInput.files || fileInput.files.length === 0) {
+      fileError.classList.remove("hidden");
+    } else {
+      fileError.classList.add("hidden");
+    }
+  }
+  //
   formSubmitBtn.addEventListener("click", function (event) {
     event.preventDefault();
     if (stepMenuOne.className == "formbold-step-menu1 active") {
@@ -482,7 +677,6 @@
         stepTwo.classList.add("active");
         stepThree.classList.remove("active");
 
-
         formBackBtn.classList.add("active");
         formSubmitBtn.textContent = "Next Step";
       });
@@ -492,4 +686,3 @@
     }
   });
 </script>
-<!--Fin de JavaScript-->
