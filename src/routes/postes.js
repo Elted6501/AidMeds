@@ -104,38 +104,23 @@ post.post('/user/profile', helpers.isLoggedIn, async (req, res) => {
 });
 
 // Quitar next
-post.post('/user/profile/ine', helpers.isLoggedIn, async (req, res, next) => {
-
-    const imgine = await pool.query('SELECT * FROM usuarios WHERE id_usuario = ?', [req.user.id_usuario]);
-    const ine = imgine[0];
+post.post('/user/profile/ine', helpers.isLoggedIn, async (req, res) => {
 
     if (req.file !== undefined && req.file !== null && req.file !== '') {
-        await fs.unlink(path.resolve('./src/public/files/' + ine.rutaine), async (err, result) => {
+
+        let rutacloud = await cloudinary.v2.uploader.upload(req.file.path);
+
+        const values = [rutacloud, [req.user.id_usuario]];
+        await pool.query('UPDATE usuarios SET rutaine = ?, updated_at = now() WHERE id_usuario = ?', values, (err, result) => {
             if (err) {
-                next(null);
+                res.redirect('/user/profile');
             } else {
-                next(null);
-            }
-
-            if (req.file !== undefined && req.file !== null && req.file !== '') {
-                let rutacloud = await cloudinary.v2.uploader.upload(req.file.path);
-
-                const values = [rutacloud, [req.user.id_usuario]];
-                await pool.query('UPDATE usuarios SET rutaine = ?, updated_at = now() WHERE id_usuario = ?', values, (err, result) => {
-                    if (err) {
-                        next(null);
-                    } else {
-                        next(null);
-                    }
-                });
-            } else {
-                next(null)
+                res.redirect('/user/profile');
             }
         });
     } else {
-        next(null);
+        res.redirect('/user/profile');
     }
-    res.redirect('/user/profile');
 });
 
 post.post('/user/profile/delete', helpers.isLoggedIn, async (req, res) => {

@@ -127,7 +127,7 @@
                 required />
               <!-- Mensaje de error si la contraseña no es válida -->
               <p id="passErrorText" class="text-red-500 text-xs mt-1 hidden">
-                Please enter a valid password.
+                Please enter a valid password, at least 8 characters.
               </p>
               <br />
             </div>
@@ -139,7 +139,7 @@
               <div class="formbold-form-confirm">
                 <p>
                   Upload a photo of your INE.
-                  <br />
+                  <br>
                   Allowed documents: ".png" and ".jpg"
                 </p>
               </div>
@@ -175,7 +175,7 @@
                       </clipPath>
                     </defs>
                   </svg>
-                  Yes! I I agree.
+                  Yes! I agree.
                 </button>
 
                 <button class="formbold-back-btn-term active">
@@ -472,168 +472,139 @@
 
   //valida email
   function validateEmail() {
-    const emailInput = document.getElementById("emailErrores");
-    const emailError = document.getElementById("emailError");
-    const inputValue = emailInput.value.trim();
+    const emailInputElement = document.getElementById("emailErrores");
+    const emailErrorElement = document.getElementById("emailError");
+    const inputValue = emailInputElement.value.trim();
 
     if (!inputValue) {
-      emailError.textContent = "Email field cannot be empty.";
-      emailError.classList.remove("hidden");
+        emailErrorElement.textContent = "Email field cannot be empty.";
+        emailErrorElement.classList.remove("hidden");
     } else {
-      const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-        inputValue
-      );
+        const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue);
 
-      if (!isValid) {
-        emailError.textContent = "Please enter a valid email address.";
-        emailError.classList.remove("hidden");
-      } else {
-        emailError.classList.add("hidden");
-      }
+        if (!isValid) {
+            emailErrorElement.textContent = "Please enter a valid email address.";
+            emailErrorElement.classList.remove("hidden");
+        } else {
+            emailErrorElement.classList.add("hidden");
+        }
     }
-  }
+}
 
-  function checkTabOrClick(event) {
-    if (event.key === "Tab" || event.type === "click") {
-      validateEmail();
-    }
-  }
+function validateName() {
+    const nameInputElement = document.getElementById("nameInput");
+    const nameErrorElement = document.getElementById("nameErrores");
+    const inputValue = nameInputElement.value.trim();
 
-  // nulos name
-  function notNullname() {
-    const nameInput = document.getElementById("nameInput");
-    const nameError = document.getElementById("nameErrores");
-    const inputValue = nameInput.value.trim();
-
-    if (inputValue === "" || !/^[a-zA-Z]{3,}$/.test(inputValue)) {
-      nameError.classList.remove("hidden");
+    if (inputValue === "") {
+        nameErrorElement.classList.remove("hidden");
     } else {
-      nameError.classList.add("hidden");
+        nameErrorElement.classList.add("hidden");
     }
-  }
+}
 
-  function checkTab(event) {
-    if (event.key === "Tab") {
-      notNullname();
-    }
-  }
-  // nulos lastname
-  function notNullLastname() {
-    const lastnameInput = document.getElementById("lastnameInput");
-    const lastnameError = document.getElementById("lastnameErrores");
-    const inputValue = lastnameInput.value.trim();
+function validateLastName() {
+    const lastNameInputElement = document.getElementById("lastnameInput");
+    const lastNameErrorElement = document.getElementById("lastnameErrores");
+    const inputValue = lastNameInputElement.value.trim();
 
-    if (inputValue === "" || !/^[a-zA-Z]{3,}$/.test(inputValue)) {
-      lastnameError.classList.remove("hidden");
+    if (inputValue === "") {
+        lastNameErrorElement.classList.remove("hidden");
     } else {
-      lastnameError.classList.add("hidden");
+        lastNameErrorElement.classList.add("hidden");
     }
-  }
+}
 
-  function checkTab(event) {
-    if (event.key === "Tab") {
-      notNullLastname();
-    }
-  }
-
-  //VALITE CURP
-  function validateCurp() {
-    const curpInput = document.getElementById("curp");
-    const curpError = document.getElementById("curpError");
-    const curpValue = curpInput.value.trim();
+function validateCurp() {
+    const curpInputElement = document.getElementById("curp");
+    const curpErrorElement = document.getElementById("curpError");
+    const curpValue = curpInputElement.value.trim();
 
     if (curpValue.length !== 18) {
-      curpError.classList.remove("hidden");
-      curpInput.classList.add("error");
-      curpInput.focus();
-      return false;
+        curpErrorElement.classList.remove("hidden");
+        curpInputElement.classList.add("error");
+        
     } else {
-      curpError.classList.add("hidden");
-      curpInput.classList.remove("error");
+        curpErrorElement.classList.add("hidden");
+        curpInputElement.classList.remove("error");
     }
 
     return true;
-  }
+}
 
-  function clearCurpError() {
-    const curpError = document.getElementById("curpError");
-    const curpInput = document.getElementById("curp");
+function validateAddress() {
+    const addressInputElement = document.getElementById("addressInput");
+    const addressErrorElement = document.getElementById("addressError");
+    const inputValue = addressInputElement.value.trim();
 
-    curpError.classList.add("hidden");
-    curpInput.classList.remove("error");
-  }
-
-  //valite address
-  function validateAddress() {
-    const addressInput = document.getElementById("addressInput");
-    const addressError = document.getElementById("addressError");
-    const inputValue = addressInput.value.trim();
-
-    if (!inputValue) {
-      addressError.textContent = "Address field cannot be empty.";
-      addressError.classList.remove("hidden");
+    if (inputValue == "") {
+        addressErrorElement.textContent = "Address field cannot be empty.";
+        addressErrorElement.classList.remove("hidden");
     } else {
-      addressError.classList.add("hidden");
+        addressErrorElement.classList.add("hidden");
     }
-  }
+}
 
-  function checkTabOrClick(event) {
-    if (event.key === "Tab" || event.type === "click") {
-      validateAddress();
-    }
-  }
-  //valida password
-  function validatePass() {
-    const passInput = document.getElementById("password");
-    const passError = document.getElementById("passErrorText");
-    const inputValue = passInput.value;
+function validatePass() {
+    const passInputElement = document.getElementById("password");
+    const passErrorElement = document.getElementById("passErrorText");
+    const inputValue = passInputElement.value;
     const isValid = /^[\s\S]{8,20}$/.test(inputValue);
 
-    if (!isValid) {
-      passError.classList.remove("hidden");
+    if (!isValid || passInputElement.length <= 7) {
+        passErrorElement.classList.remove("hidden");
     } else {
-      passError.classList.add("hidden");
+        passErrorElement.classList.add("hidden");
     }
-  }
+}
 
-  function checkTabOrClick(event) {
-    if (
-      (event.key === "Tab" || event.type === "click") &&
-      !document.getElementById("password").value.trim()
-    ) {
-      alert("Password field cannot be empty.");
-    }
-  }
-  //valida phone
-  function validatePhone() {
-    const phoneInput = document.getElementById("phoneInput");
-    const phoneError = document.getElementById("phoneError");
-    const inputValue = phoneInput.value.trim();
+function validatePhone() {
+    const phoneInputElement = document.getElementById("phoneInput");
+    const phoneErrorElement = document.getElementById("phoneError");
+    const inputValue = phoneInputElement.value.trim();
 
     if (inputValue === "" || !/^\d{10}$/.test(inputValue)) {
-      phoneError.classList.remove("hidden");
+        phoneErrorElement.classList.remove("hidden");
     } else {
-      phoneError.classList.add("hidden");
+        phoneErrorElement.classList.add("hidden");
     }
-  }
+}
 
-  function checkTab(event) {
-    if (event.key === "Tab") {
-      validatePhone();
+function validateFile() {
+    const fileInputElement = document.getElementById("rutaine");
+    const fileErrorElement = document.getElementById("fileError");
+
+    if (!fileInputElement.files || fileInputElement.files.length === 0) {
+        fileErrorElement.textContent = "No file selected.";
+        fileErrorElement.classList.remove("hidden");
+        return false;
     }
-  }
 
-  //documents
-  function validateFile() {
-    const fileInput = document.getElementById("rutaine");
-    const fileError = document.getElementById("fileError");
+    const allowedExtensions = ["jpg", "png"];
+    const fileName = fileInputElement.files[0].name;
+    const fileExtension = fileName.split(".").pop();
 
-    if (!fileInput.file || fileInput.file.length === 0) {
-      fileError.classList.remove("hidden");
-    } else {
-      fileError.classList.add("hidden");
+    if (!allowedExtensions.includes(fileExtension.toLowerCase())) {
+        fileErrorElement.textContent = "File extension must be .jpg or .png.";
+        fileErrorElement.classList.remove("hidden");
+        return false;
     }
-  }
+
+    fileErrorElement.classList.add("hidden");
+    return true;
+}
+
+
+// Add event listeners
+document.getElementById("emailErrores").addEventListener("blur", validateEmail);
+document.getElementById("nameInput").addEventListener("blur", validateName);
+document.getElementById("lastnameInput").addEventListener("blur", validateLastName);
+document.getElementById("curp").addEventListener("blur", validateCurp);
+document.getElementById("addressInput").addEventListener("blur", validateAddress);
+document.getElementById("password").addEventListener("blur", validatePass);
+document.getElementById("phoneInput").addEventListener("blur", validatePhone);
+document.getElementById("rutaine").addEventListener("change", validateFile);
+
   //
   formSubmitBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -658,7 +629,7 @@
 
         formBackBtn.classList.remove("active");
       });
-    } else if (stepMenuTwo.className == "formbold-step-menu2 active") {
+    } else if (stepMenuTwo.className == "formbold-step-menu2 active" && validateFile()) {
       event.preventDefault();
 
       stepMenuTwo.classList.remove("active");

@@ -51,11 +51,12 @@ app.use(multer({
     storage: storage,
     dest: path.join(__dirname, 'public/files'),
     fileFilter: (req, file, cb) =>{
-        const filetypes = /|jpg|png|/;
+        const filetypes = /jpg|png/;
         const mimetype = filetypes.test(file.mimetype);
         const extname = filetypes.test(path.extname(file.originalname));
         if (mimetype && extname) {
-            return cb(null, true);
+            return cb(null, true, console.log('filro multer'));
+            
         }
         cb(null, false);
     }
