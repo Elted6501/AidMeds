@@ -4,7 +4,7 @@ import { promisify } from "util";
 const pool = createPool({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "Isaac6501",
     database: "aidmeds"
 });
 

@@ -40,7 +40,9 @@
               <div>
                 <label for="name" class="formbold-form-label"> Name </label>
                 <input type="text" name="name" placeholder="Andrio" id="nameInput" onblur="notNullname()"
-                  onkeydown="checkTab(event)" class="formbold-form-input" required />
+                  onkeydown="checkTab(event)" class="formbold-form-input" onpaste="return false"
+                  onkeypress="return (event.charCode == 32 || event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
+                  required />
                 <!-- Mensaje de error si el campo está vacío -->
                 <p id="nameErrores" class="text-red-500 text-xs mt-1 hidden">
                   Please enter a valid Name.
@@ -51,7 +53,8 @@
                   Last name
                 </label>
                 <input type="text" name="lastname" placeholder="Dolee" id="lastnameInput" onblur="notNullLastname()"
-                  onkeydown="checkTab(event)" class="formbold-form-input" required />
+                  onkeypress="return (event.charCode == 32 || event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
+                  onkeydown="checkTab(event)" class="formbold-form-input" onpaste="return false" required />
                 <!-- Mensaje de error si el campo está vacío -->
                 <p id="lastnameErrores" class="text-red-500 text-xs mt-1 hidden">
                   Please enter a valid lastname.
@@ -62,7 +65,7 @@
                 <label for="tel" class="formbold-form-label">Phone Number</label>
                 <input type="tel" name="tel" placeholder="10 Digits" id="phoneInput" class="formbold-form-input"
                   onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" maxlength="10" required
-                  onchange="validatePhone()" onkeydown="checkTab(event)" />
+                  onchange="validatePhone()" onpaste="return false" onkeydown="checkTab(event)" />
                 <!-- Mensaje de error si el número no es válido -->
                 <p id="phoneError" class="text-red-500 text-xs mt-1 hidden">
                   Please enter a valid number.
@@ -74,8 +77,9 @@
               <div>
                 <label for="curp" class="formbold-form-label"> CURP </label>
                 <input type="text" name="curp" id="curp" placeholder="18 digits"
-                  onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
-                  onblur="validateCurp()" onfocus="clearCurpError()" class="formbold-form-input" required />
+                  onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57))"
+                  onblur="validateCurp()" onfocus="clearCurpError()" class="formbold-form-input" maxlength="18"
+                  onpaste="return false" required />
                 <p id="curpError" class="text-red-500 text-xs mt-1 hidden">
                   Please enter a valid CURP with 18 characters.
                 </p>
@@ -99,7 +103,8 @@
             <div>
               <label for="direcc" class="formbold-form-label">Address</label>
               <input type="text" name="direcc" id="addressInput" placeholder="Flat 4, 24 Castle Street, Perth, PH1 3JY"
-                class="formbold-form-input" required oninput="validateAddress()" onkeydown="checkTabOrClick(event)" />
+                class="formbold-form-input" required oninput="validateAddress()" onkeydown="checkTabOrClick(event)"
+                onpaste="return false" />
               <!-- Mensaje de error si la dirección no es válida -->
               <p id="addressError" class="text-red-500 text-xs mt-1 hidden">
                 Address field cannot be empty.
@@ -110,7 +115,7 @@
               <label for="email" class="formbold-form-label">Email</label>
               <input type="email" name="email" id="emailErrores" onblur="validateEmail()"
                 class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                placeholder="You@example.com" />
+                placeholder="You@example.com" onpaste="return false" required />
               <!-- Mensaje de error si el correo electrónico no es válido -->
               <p id="emailError" class="text-red-500 text-xs mt-1 hidden">
                 Please enter a valid email address.
@@ -124,7 +129,7 @@
                 onkeydown="checkTabOrClick(event)"
                 onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))"
                 minlength="8" maxlength="20" placeholder="Minimum 8-digit password" class="formbold-form-input"
-                required />
+                onpaste="return false" required />
               <!-- Mensaje de error si la contraseña no es válida -->
               <p id="passErrorText" class="text-red-500 text-xs mt-1 hidden">
                 Please enter a valid password, at least 8 characters.
@@ -143,8 +148,8 @@
                   Allowed documents: ".png" and ".jpg"
                 </p>
               </div>
-              <input type="file" name="img" id="rutaine" accept=".jpg,.png" class="formbold-form-input" onchange="validateFile()"
-                required />
+              <input type="file" name="img" id="rutaine" accept=".jpg,.png" class="formbold-form-input"
+                onchange="validateFile()" required />
               <!-- Mensaje de error si el campo está vacío -->
               <p id="fileError" class="text-red-500 text-xs mt-1 hidden">
                 Please upload a document.
@@ -477,107 +482,107 @@
     const inputValue = emailInputElement.value.trim();
 
     if (!inputValue) {
-        emailErrorElement.textContent = "Email field cannot be empty.";
-        emailErrorElement.classList.remove("hidden");
+      emailErrorElement.textContent = "Email field cannot be empty.";
+      emailErrorElement.classList.remove("hidden");
     } else {
-        const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue);
+      const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputValue);
 
-        if (!isValid) {
-            emailErrorElement.textContent = "Please enter a valid email address.";
-            emailErrorElement.classList.remove("hidden");
-        } else {
-            emailErrorElement.classList.add("hidden");
-        }
+      if (!isValid) {
+        emailErrorElement.textContent = "Please enter a valid email address.";
+        emailErrorElement.classList.remove("hidden");
+      } else {
+        emailErrorElement.classList.add("hidden");
+      }
     }
-}
+  }
 
-function validateName() {
+  function validateName() {
     const nameInputElement = document.getElementById("nameInput");
     const nameErrorElement = document.getElementById("nameErrores");
     const inputValue = nameInputElement.value.trim();
 
     if (inputValue === "") {
-        nameErrorElement.classList.remove("hidden");
+      nameErrorElement.classList.remove("hidden");
     } else {
-        nameErrorElement.classList.add("hidden");
+      nameErrorElement.classList.add("hidden");
     }
-}
+  }
 
-function validateLastName() {
+  function validateLastName() {
     const lastNameInputElement = document.getElementById("lastnameInput");
     const lastNameErrorElement = document.getElementById("lastnameErrores");
     const inputValue = lastNameInputElement.value.trim();
 
     if (inputValue === "") {
-        lastNameErrorElement.classList.remove("hidden");
+      lastNameErrorElement.classList.remove("hidden");
     } else {
-        lastNameErrorElement.classList.add("hidden");
+      lastNameErrorElement.classList.add("hidden");
     }
-}
+  }
 
-function validateCurp() {
+  function validateCurp() {
     const curpInputElement = document.getElementById("curp");
     const curpErrorElement = document.getElementById("curpError");
     const curpValue = curpInputElement.value.trim();
 
     if (curpValue.length !== 18) {
-        curpErrorElement.classList.remove("hidden");
-        curpInputElement.classList.add("error");
-        
+      curpErrorElement.classList.remove("hidden");
+      curpInputElement.classList.add("error");
+
     } else {
-        curpErrorElement.classList.add("hidden");
-        curpInputElement.classList.remove("error");
+      curpErrorElement.classList.add("hidden");
+      curpInputElement.classList.remove("error");
     }
 
     return true;
-}
+  }
 
-function validateAddress() {
+  function validateAddress() {
     const addressInputElement = document.getElementById("addressInput");
     const addressErrorElement = document.getElementById("addressError");
     const inputValue = addressInputElement.value.trim();
 
     if (inputValue == "") {
-        addressErrorElement.textContent = "Address field cannot be empty.";
-        addressErrorElement.classList.remove("hidden");
+      addressErrorElement.textContent = "Address field cannot be empty.";
+      addressErrorElement.classList.remove("hidden");
     } else {
-        addressErrorElement.classList.add("hidden");
+      addressErrorElement.classList.add("hidden");
     }
-}
+  }
 
-function validatePass() {
+  function validatePass() {
     const passInputElement = document.getElementById("password");
     const passErrorElement = document.getElementById("passErrorText");
     const inputValue = passInputElement.value;
     const isValid = /^[\s\S]{8,20}$/.test(inputValue);
 
     if (!isValid || passInputElement.length <= 7) {
-        passErrorElement.classList.remove("hidden");
+      passErrorElement.classList.remove("hidden");
     } else {
-        passErrorElement.classList.add("hidden");
+      passErrorElement.classList.add("hidden");
     }
-}
+  }
 
-function validatePhone() {
+  function validatePhone() {
     const phoneInputElement = document.getElementById("phoneInput");
     const phoneErrorElement = document.getElementById("phoneError");
     const inputValue = phoneInputElement.value.trim();
 
     if (inputValue === "" || !/^\d{10}$/.test(inputValue)) {
-        phoneErrorElement.classList.remove("hidden");
+      phoneErrorElement.classList.remove("hidden");
     } else {
-        phoneErrorElement.classList.add("hidden");
+      phoneErrorElement.classList.add("hidden");
     }
-}
+  }
 
-function validateFile() {
+  function validateFile() {
     const fileInputElement = document.getElementById("rutaine");
     const fileErrorElement = document.getElementById("fileError");
 
     if (!fileInputElement.files || fileInputElement.files.length === 0) {
-        fileErrorElement.textContent = "No file selected.";
-        fileErrorElement.classList.remove("hidden");
-        return false;
+      fileErrorElement.textContent = "No file selected.";
+      fileErrorElement.classList.remove("hidden");
+      return false;
     }
 
     const allowedExtensions = ["jpg", "png"];
@@ -585,25 +590,25 @@ function validateFile() {
     const fileExtension = fileName.split(".").pop();
 
     if (!allowedExtensions.includes(fileExtension.toLowerCase())) {
-        fileErrorElement.textContent = "File extension must be .jpg or .png.";
-        fileErrorElement.classList.remove("hidden");
-        return false;
+      fileErrorElement.textContent = "File extension must be .jpg or .png.";
+      fileErrorElement.classList.remove("hidden");
+      return false;
     }
 
     fileErrorElement.classList.add("hidden");
     return true;
-}
+  }
 
 
-// Add event listeners
-document.getElementById("emailErrores").addEventListener("blur", validateEmail);
-document.getElementById("nameInput").addEventListener("blur", validateName);
-document.getElementById("lastnameInput").addEventListener("blur", validateLastName);
-document.getElementById("curp").addEventListener("blur", validateCurp);
-document.getElementById("addressInput").addEventListener("blur", validateAddress);
-document.getElementById("password").addEventListener("blur", validatePass);
-document.getElementById("phoneInput").addEventListener("blur", validatePhone);
-document.getElementById("rutaine").addEventListener("change", validateFile);
+  // Add event listeners
+  document.getElementById("emailErrores").addEventListener("blur", validateEmail);
+  document.getElementById("nameInput").addEventListener("blur", validateName);
+  document.getElementById("lastnameInput").addEventListener("blur", validateLastName);
+  document.getElementById("curp").addEventListener("blur", validateCurp);
+  document.getElementById("addressInput").addEventListener("blur", validateAddress);
+  document.getElementById("password").addEventListener("blur", validatePass);
+  document.getElementById("phoneInput").addEventListener("blur", validatePhone);
+  document.getElementById("rutaine").addEventListener("change", validateFile);
 
   //
   formSubmitBtn.addEventListener("click", function (event) {

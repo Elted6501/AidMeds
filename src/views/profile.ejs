@@ -13,114 +13,53 @@
 <body>
   <%- include("partials/navigationnorth") %>
 
-    
-    <% if (user.id_hospital) { %>
-      <div class="col-span-2">
-        <div
-          class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-          <h3 class="mb-4 text-xl font-semibold dark:text-white">General information</h3>
 
-          <form action="/userhospital/profile" method="post">
-            <div class="grid grid-cols-6 gap-6">
-              <div class="col-span-6 sm:col-span-3">
-                <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Hospital Name
-                </label>
-                <input type="text" name="name" id="first-name" value="<%= user.name %>"
-                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="">
-              </div>
-              <br>
-              <div class="col-span-6 sm:col-span-3">
-                <label for="address"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                <input type="text" name="direcc" id="address" value="<%= user.direcc %>"
-                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="">
-              </div>
-              <br>
-              <div class="col-span-6 sm:col-span-3">
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                <input type="email" name="email" id="email" value="<%= user.email %>"
-                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="">
-              </div>
-              <br>
-              <div class="col-span-6 sm:col-span-3">
-                <label for="phone-number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone
-                  Number</label>
-                <input type="number" name="tel" id="phone-number" value="<%= user.tel %>"
-                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="">
-              </div>
-              <br>
-              <div class="col-span-6 sm:col-span-3">
-                <label for="password"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                <input type="password" name="password" id="password"
-                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Type your password to confirm">
-              </div>
-              <br>
-              <div class="col-span-6 sm:col-full">
-                <button
-                  class=" rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70"
-                  type="submit">Save all</button>
-              </div>
-            </div>
-          </form>
-        </div>
-        <form action="/user/profile/delete" method="post">
-          <div
-            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+
+    <div class="col-span-2">
+      <div
+        class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">General information</h3>
+
+        <form action="/user/profile" method="post">
+          <div class="grid grid-cols-6 gap-6">
             <div class="col-span-6 sm:col-span-3">
-              <label for="password"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-              <input type="password" name="password" id="password"
-                class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Type your password if you want to delete the account">
-            </div>
-            <br>
-            <button
-              class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70"
-              type="submit">
-              Delete profile
-            </button>
-          </div>
-        </form>
-      </div>
-      <% } else { %>
-        <div class="col-span-2">
-          <div
-            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-            <h3 class="mb-4 text-xl font-semibold dark:text-white">General information</h3>
-
-            <form action="/user/profile" method="post">
-              <div class="grid grid-cols-6 gap-6">
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
+              <% if (user.id_hospital==null) { %>
+                <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First
+                  Name</label>
+                <input type="text" name="name" id="name" value="<%= user.name %>"
+                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder=""
+                  onkeypress="return (event.charCode == 32 || event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))">
+                <% } else { %>
+                  <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hospital
                     Name</label>
                   <input type="text" name="name" id="name" value="<%= user.name %>"
                     class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="">
-                </div>
-                <br>
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last
-                    Name</label>
-                  <input type="text" name="lastname" id="last-name" value="<%= user.lastname %>"
-                    class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="">
-                </div>
-                <br>
-                <div class="col-span-6 sm:col-span-3">
-                  <label for="curp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Curp
-                  </label>
-                  <input type="text" name="curp" id="curp" value="<%= cur.curp %>"
-                    class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="">
-                </div>
+                  <% } %>
+
+            </div>
+            <% if (user.id_hospital==null) { %>
+
+              <br>
+              <div class="col-span-6 sm:col-span-3">
+                <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Lastname</label>
+                <input type="text" name="lastname" id="last-name" value="<%= user.lastname %>"
+                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder=""
+                  onkeypress="return (event.charCode == 32 || event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122))">
+              </div>
+              <br>
+              <div class="col-span-6 sm:col-span-3">
+                <label for="curp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Curp
+                </label>
+                <input type="text" name="curp" id="curp" value="<%= cur.curp %>"
+                  class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  placeholder="" onkeypress="return (event.charCode == 209 || event.charCode == 241 || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57))">
+              </div>
+              <% } %>
                 <br>
                 <div class="col-span-6 sm:col-span-3">
                   <label for="address"
@@ -142,7 +81,7 @@
                     Number</label>
                   <input type="number" name="tel" id="phone-number" value="<%= user.tel %>"
                     class="px-2 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="">
+                    placeholder="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
                 </div>
                 <br>
                 <div class="col-span-6 sm:col-span-3">
@@ -160,38 +99,40 @@
                     Save all
                   </button>
                 </div>
-              </div>
-            </form>
           </div>
-          <form action="/user/profile/ine" method="post" enctype="multipart/form-data">
+        </form>
+      </div>
+      <% if (user.id_hospital==null) { %>
+        <form action="/user/profile/ine" method="post" enctype="multipart/form-data">
+          <div
+            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            <label for="rutaine" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Documents
+            </label>
             <div
-              class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-              <label for="rutaine"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Documents
-              </label>
-              <div
-                class="col-span-6 sm:col-span-3 p-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                <div>
-                  <p class="dark:text-white">
-                    Upload a photo of your INE.
-                    <br>
-                    Allowed documents: ".png," and ".jpg"
-                  </p>
-                </div>
-                <input type="file" name="img" id="img" class="dark:text-white"/>
+              class="col-span-6 sm:col-span-3 p-4 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-primary-500 dark:focus:border-primary-500">
+              <div>
+                <p class="dark:text-white">
+                  Upload a photo of your INE.
+                  <br>
+                  Allowed documents: ".png," and ".jpg"
+                </p>
               </div>
-              <br>
-              <button
-                class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70"
-                type="submit">
-                Save
-              </button>
-              <a href="<%= user.rutaine %>"
-                class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70">
-                Ine
-              </a>
+              <input type="file" name="img" id="img" accept=".jpg,.png" class="dark:text-white" />
             </div>
-          </form>
+            <br>
+            <button
+              class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70"
+              type="submit">
+              Save
+            </button>
+            <a href="<%= user.rutaine %>"
+              class="border dark:border-gray-600 rounded-lg px-5 py-2 text-sm text-gray-700 bg-gray-100 dark:bg-gray-800 dark:text-gray-300 hover:!bg-white/80 active:!bg-white/70">
+              Ine
+            </a>
+          </div>
+        </form>
+        <% } %>
           <form action="/user/profile/delete" method="post">
             <div
               class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
@@ -210,10 +151,9 @@
               </button>
             </div>
           </form>
-        </div>
-        <% } %>
+    </div>
 
-          <%- include("partials/navigationsouth") %>
+    <%- include("partials/navigationsouth") %>
 </body>
 
 </html>

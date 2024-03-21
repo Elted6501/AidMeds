@@ -34,6 +34,7 @@ passport.use('local.signup', new LocalStrategy({
 }, async (req, email, password, done) => {
 
     if (req.file != undefined) {
+        
         if (password.length >= 8) {
 
             const name = req.body.name,
