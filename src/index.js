@@ -1,4 +1,5 @@
 import express from 'express';
+import 'dotenv/config';
 import morgan from 'morgan';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
@@ -50,13 +51,12 @@ app.use(flash());
 app.use(multer({
     storage: storage,
     dest: path.join(__dirname, 'public/files'),
-    fileFilter: (req, file, cb) =>{
+    fileFilter: (req, file, cb) => {
         const filetypes = /jpg|png/;
         const mimetype = filetypes.test(file.mimetype);
         const extname = filetypes.test(path.extname(file.originalname));
         if (mimetype && extname) {
-            return cb(null, true, console.log('filro multer'));
-            
+            return cb(null, true);
         }
         cb(null, false);
     }
@@ -76,6 +76,6 @@ app.use(au);
 app.use(cl);
 
 // Public
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 app.listen(3000);
 console.log('SERVER IS LISTENING ON PORT', 3000);

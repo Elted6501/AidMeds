@@ -1,10 +1,10 @@
 import passport from 'passport';
-import passport_local from 'passport-local';
+import {Strategy as passport_local} from 'passport-local';
 import cloudinary from 'cloudinary';
 import pool from '../db.js';
 import helpers from './helpers.js';
 
-const LocalStrategy = passport_local.Strategy
+const LocalStrategy = passport_local
 
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'email',

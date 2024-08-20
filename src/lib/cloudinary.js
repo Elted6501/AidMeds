@@ -1,15 +1,14 @@
 import { Router } from 'express';
-import cloudinary from 'cloudinary';
+
+import { v2 as cloud } from 'cloudinary';
+
 const cl = Router();
-const cloud = cloudinary.v2
 
 cloud.config({
-    secure: true,
-    cloud_name: 'dglqsxwon',
-    api_key: '499835227724769',
-    api_secret: 'qxdInVtC6A7MxSrdOO07ovwpGHo',
-  });  
-  
-console.log(cloud.config());
+  secure: true,
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
 
 export default cl;

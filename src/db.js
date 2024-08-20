@@ -2,10 +2,10 @@ import { createPool } from "mysql";
 import { promisify } from "util";
 
 const pool = createPool({
-    host: "localhost",
-    user: "root",
-    password: "Isaac6501",
-    database: "aidmeds"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
 });
 
 pool.getConnection((err, connection) => {

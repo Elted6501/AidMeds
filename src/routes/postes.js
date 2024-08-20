@@ -1,12 +1,10 @@
 import { Router } from "express";
 import bodyParser from 'body-parser';
 import fs from "fs-extra";
-import path from "path";
 import moment from "moment";
 import pool from "../db.js";
 import helpers from "../lib/helpers.js";
 import cloudinary from "cloudinary"
-
 
 const post = Router();
 
