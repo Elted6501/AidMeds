@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import { v2 as cloud } from 'cloudinary';
 
 const cl = Router();

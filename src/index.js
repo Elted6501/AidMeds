@@ -1,5 +1,4 @@
 import express from 'express';
-import 'dotenv/config';
 import morgan from 'morgan';
 import session from 'express-session';
 import MySQLStore from 'express-mysql-session';
@@ -8,6 +7,7 @@ import flash from 'connect-flash';
 import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'dotenv/config';
 
 import router from './routes/routes.js';
 import post from './routes/postes.js';
@@ -51,12 +51,13 @@ app.use(flash());
 app.use(multer({
     storage: storage,
     dest: path.join(__dirname, 'public/files'),
-    fileFilter: (req, file, cb) => {
-        const filetypes = /jpg|png/;
+    fileFilter: (req, file, cb) =>{
+        const filetypes = /jpeg|jpg|png/;
         const mimetype = filetypes.test(file.mimetype);
         const extname = filetypes.test(path.extname(file.originalname));
         if (mimetype && extname) {
             return cb(null, true);
+            
         }
         cb(null, false);
     }

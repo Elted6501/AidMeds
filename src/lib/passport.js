@@ -1,5 +1,6 @@
 import passport from 'passport';
-import {Strategy as passport_local} from 'passport-local';
+import { Strategy as passport_local } from 'passport-local';
+import fs from 'fs-extra';
 import cloudinary from 'cloudinary';
 import pool from '../db.js';
 import helpers from './helpers.js';
@@ -34,7 +35,7 @@ passport.use('local.signup', new LocalStrategy({
 }, async (req, email, password, done) => {
 
     if (req.file != undefined) {
-        
+
         if (password.length >= 8) {
 
             const name = req.body.name,
@@ -43,7 +44,18 @@ passport.use('local.signup', new LocalStrategy({
                 direcc = req.body.direcc,
                 curp = req.body.curp.toLocaleUpperCase(),
                 id_municipio = helpers.id_muni(req.body.municipio),
-                rutacloudine = (await cloudinary.v2.uploader.upload(req.file.path)).url;
+                rutacloudine = await cloudinary.v2.uploader.upload(req.file.path)
+                    .then(async (result) => {
+                        await fs.unlink(req.file.path);
+                        return result.secure_url;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        return req.file.path;
+
+                    });
+                console.log(rutacloudine);
+
 
             const newUser = {
                 email,
@@ -52,9 +64,9 @@ passport.use('local.signup', new LocalStrategy({
 
             newUser.password = await helpers.encryptPassword(password);
 
-            let validcurp = curp.substring(0,2);
-            let firstlastnameletter = lastname.toLocaleUpperCase().substring(0,1);
-            let firstlastnamevocal = lastname.toLocaleUpperCase().substring(1, ).match(/[AEIOU]/)[0];
+            let validcurp = curp.substring(0, 2);
+            let firstlastnameletter = lastname.toLocaleUpperCase().substring(0, 1);
+            let firstlastnamevocal = lastname.toLocaleUpperCase().substring(1,).match(/[AEIOU]/)[0];
 
             if (validcurp === firstlastnameletter + firstlastnamevocal) {
 
@@ -62,7 +74,7 @@ passport.use('local.signup', new LocalStrategy({
                 await pool.query('INSERT INTO usuarios (name, lastname, tel, direcc, email, curp, id_municipio, password, rutaine, created_at, updated_at) VALUES (?,?,?,?,?,AES_ENCRYPT(?,"curp"),?,?,?,now(),now())', valores,
                     (err, resultado) => {
                         if (err) {
-                            
+
                             console.log(err);
                             done(null, false, req.flash('message', 'Check your data'));
                         } else {
