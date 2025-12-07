@@ -45,7 +45,7 @@ services:
       CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
       CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
     depends_on:
       mysql:
         condition: service_healthy
@@ -64,7 +64,7 @@ services:
     container_name: aidmeds_frontend
     restart: unless-stopped
     ports:
-      - "5173:4173"
+      - "5173:5173"
     depends_on:
       - backend
     networks:
