@@ -231,6 +231,8 @@ FRONTEND_URL=http://localhost:5173
 VITE_API_URL=http://localhost:5001/api
 ```
 
+**Nota:** Para Docker, el frontend se construye con la URL del API y se sirve con Vite preview server.
+
 ---
 
 ## 🐳 Docker
@@ -260,6 +262,8 @@ docker-compose down
 docker-compose down -v
 docker-compose up -d
 ```
+
+**Nota:** El frontend usa Vite preview server. Para producción de alto tráfico, considera desplegar en Vercel, Netlify, o usar nginx.
 
 ---
 
