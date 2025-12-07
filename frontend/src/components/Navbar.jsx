@@ -1,13 +1,28 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useState, useRef, useEffect } from 'react';
 
 const Navbar = () => {
     const { isAuthenticated, user, logout } = useAuth();
     const navigate = useNavigate();
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const profileRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setIsProfileOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const handleLogout = async () => {
         await logout();
         navigate('/login');
+        setIsProfileOpen(false);
     };
 
     return (
@@ -40,36 +55,44 @@ const Navbar = () => {
                                     </Link>
                                 )}
 
-                                <div className="relative group">
-                                    <button className="hover:bg-blue-700 px-3 py-2 rounded">
+                                <div className="relative" ref={profileRef}>
+                                    <button 
+                                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                                        className="hover:bg-blue-700 px-3 py-2 rounded"
+                                    >
                                         {user?.nombre || 'Usuario'}
                                     </button>
-                                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
-                                        <Link 
-                                            to="/profile" 
-                                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                        >
-                                            Mi Perfil
-                                        </Link>
-                                        <Link 
-                                            to="/my-donations" 
-                                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                        >
-                                            Mis Donaciones
-                                        </Link>
-                                        <Link 
-                                            to="/my-requests" 
-                                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                        >
-                                            Mis Solicitudes
-                                        </Link>
-                                        <button
-                                            onClick={handleLogout}
-                                            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
-                                        >
-                                            Cerrar Sesión
-                                        </button>
-                                    </div>
+                                    {isProfileOpen && (
+                                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                                            <Link 
+                                                to="/profile" 
+                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsProfileOpen(false)}
+                                            >
+                                                Mi Perfil
+                                            </Link>
+                                            <Link 
+                                                to="/my-donations" 
+                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsProfileOpen(false)}
+                                            >
+                                                Mis Donaciones
+                                            </Link>
+                                            <Link 
+                                                to="/my-requests" 
+                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                                onClick={() => setIsProfileOpen(false)}
+                                            >
+                                                Mis Solicitudes
+                                            </Link>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                                            >
+                                                Cerrar Sesión
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </>
                         ) : (

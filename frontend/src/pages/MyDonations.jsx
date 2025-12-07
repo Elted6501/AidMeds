@@ -4,6 +4,7 @@ import { donationService } from '../services/donationService';
 const MyDonations = () => {
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         loadDonations();
@@ -11,12 +12,16 @@ const MyDonations = () => {
 
     const loadDonations = async () => {
         try {
+            setError(null);
             const response = await donationService.getMyDonations();
             if (response.success) {
                 setDonations(response.donaciones);
             }
         } catch (error) {
             console.error('Error al cargar donaciones:', error);
+            setError(error.response?.status === 401 
+                ? 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.'
+                : 'Hubo un problema al cargar tus donaciones. Por favor, intenta de nuevo.');
         } finally {
             setLoading(false);
         }
@@ -48,6 +53,38 @@ const MyDonations = () => {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-xl">Cargando tus donaciones...</div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center py-8">
+                <div className="container mx-auto px-4 max-w-2xl">
+                    <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+                        <div className="text-6xl mb-4">⚠️</div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                            Problema al cargar
+                        </h2>
+                        <p className="text-gray-600 mb-6">{error}</p>
+                        <div className="flex gap-4 justify-center">
+                            <button
+                                onClick={loadDonations}
+                                className="bg-blue-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-700"
+                            >
+                                Intentar de nuevo
+                            </button>
+                            {error.includes('sesión') && (
+                                <a
+                                    href="/login"
+                                    className="bg-gray-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-gray-700"
+                                >
+                                    Iniciar Sesión
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

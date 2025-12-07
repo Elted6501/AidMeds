@@ -4,15 +4,18 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
 
 const api = axios.create({
     baseURL: API_URL,
-    withCredentials: true, // Important for sessions/cookies
     headers: {
         'Content-Type': 'application/json'
     }
 });
 
-// Request interceptor
+// Request interceptor - Add JWT token to all requests
 api.interceptors.request.use(
     (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => {
@@ -20,16 +23,13 @@ api.interceptors.request.use(
     }
 );
 
-// Response interceptor
+// Response interceptor - Handle errors gracefully
 api.interceptors.response.use(
     (response) => {
         return response;
     },
     (error) => {
-        if (error.response?.status === 401) {
-            // Redirect to login if unauthorized
-            window.location.href = '/login';
-        }
+        // Let components handle errors, don't auto-redirect
         return Promise.reject(error);
     }
 );

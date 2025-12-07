@@ -1,6 +1,11 @@
 -- AidMeds - Sistema de Economía Circular de Medicamentos
 -- Versión Final Simplificada
 
+-- Set charset for this session
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+SET character_set_connection=utf8mb4;
+
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS movimientos;
 DROP TABLE IF EXISTS solicitudes_paciente;

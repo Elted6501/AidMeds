@@ -9,7 +9,7 @@ export const donationService = {
 
     // Get user's donations
     getMyDonations: async () => {
-        const response = await api.get('/donations/my-donations');
+        const response = await api.get('/donations');
         return response.data;
     },
 

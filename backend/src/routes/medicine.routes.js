@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as medicineController from '../controllers/medicine.controller.js';
-import { isAuthenticated } from '../middleware/auth.js';
+import { isAuthenticated } from '../middleware/jwt.js';
 
 const router = Router();
 

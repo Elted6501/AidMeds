@@ -10,7 +10,8 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = document.cookie.includes('token=');
+            const token = localStorage.getItem('token');
+            
             if (!token) {
                 setLoading(false);
                 return;
@@ -21,9 +22,16 @@ export const AuthProvider = ({ children }) => {
                 if (response.success) {
                     setUser(response.user);
                     setIsAuthenticated(true);
+                } else {
+                    localStorage.removeItem('token');
+                    setUser(null);
+                    setIsAuthenticated(false);
                 }
             } catch (error) {
                 console.log('Not authenticated');
+                localStorage.removeItem('token');
+                setUser(null);
+                setIsAuthenticated(false);
             } finally {
                 setLoading(false);
             }
@@ -35,7 +43,8 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             const response = await authService.login(credentials);
-            if (response.success) {
+            
+            if (response.success && response.token) {
                 setUser(response.user);
                 setIsAuthenticated(true);
                 return { success: true };
@@ -52,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData) => {
         try {
             const response = await authService.register(userData);
-            if (response.success) {
+            if (response.success && response.token) {
                 setUser(response.user);
                 setIsAuthenticated(true);
                 return { success: true };
@@ -72,6 +81,7 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
         } finally {
+            localStorage.removeItem('token');
             setUser(null);
             setIsAuthenticated(false);
         }

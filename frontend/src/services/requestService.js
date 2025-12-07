@@ -9,7 +9,7 @@ export const requestService = {
 
     // Get user's requests
     getMyRequests: async () => {
-        const response = await api.get('/requests/my-requests');
+        const response = await api.get('/requests');
         return response.data;
     },
 

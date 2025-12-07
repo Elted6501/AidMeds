@@ -1,12 +1,13 @@
-# AidMeds API Documentation
+# 📡 API Documentation - AidMeds
 
-## Base URL
-```
-http://localhost:5000/api
-```
+Base URL: `http://localhost:5001/api`
 
 ## Authentication
-La API utiliza sesiones con cookies. Después de login/register, las siguientes peticiones incluyen automáticamente las credenciales.
+
+All protected endpoints require JWT token in the Authorization header:
+```
+Authorization: Bearer <your_jwt_token>
+```
 
 ---
 
@@ -15,27 +16,72 @@ La API utiliza sesiones con cookies. Después de login/register, las siguientes 
 ### Register User
 ```http
 POST /api/auth/register
-Content-Type: application/json
+```
 
+**Body:**
+```json
 {
-  "nombre": "Juan",
-  "apellido": "Pérez",
-  "email": "juan@example.com",
-  "password": "password123",
-  "telefono": "6141234567",
-  "direccion": "Calle Principal #123",
-  "id_municipio": 14
+  "nombre": "string",
+  "apellido": "string",
+  "email": "string",
+  "password": "string (min 8 chars)",
+  "telefono": "string",
+  "direccion": "string",
+  "id_municipio": "integer"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Usuario registrado exitosamente",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id_usuario": 1,
+    "nombre": "John",
+    "apellido": "Doe",
+    "email": "john@example.com",
+    "rol": "user"
+  }
 }
 ```
 
 ### Login
 ```http
 POST /api/auth/login
-Content-Type: application/json
+```
 
+**Body:**
+```json
 {
-  "email": "juan@example.com",
-  "password": "password123"
+  "email": "string",
+  "password": "string"
+}
+```
+
+**Response:** Same as register
+
+### Get Current User
+```http
+GET /api/auth/me
+```
+🔒 **Requires authentication**
+
+**Response:**
+```json
+{
+  "success": true,
+  "user": {
+    "id_usuario": 1,
+    "nombre": "John",
+    "apellido": "Doe",
+    "email": "john@example.com",
+    "rol": "user",
+    "telefono": "1234567890",
+    "direccion": "123 Street",
+    "id_municipio": 1
+  }
 }
 ```
 
@@ -43,10 +89,14 @@ Content-Type: application/json
 ```http
 POST /api/auth/logout
 ```
+🔒 **Requires authentication**
 
-### Get Current User
-```http
-GET /api/auth/me
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Sesión cerrada exitosamente"
+}
 ```
 
 ---
@@ -56,44 +106,56 @@ GET /api/auth/me
 ### Get Profile
 ```http
 GET /api/users/profile
-Authorization: Required (session)
 ```
+🔒 **Requires authentication**
+
+**Response:** Same as GET /api/auth/me
 
 ### Update Profile
 ```http
 PUT /api/users/profile
-Authorization: Required
-Content-Type: application/json
+```
+🔒 **Requires authentication**
 
+**Body:**
+```json
 {
-  "nombre": "Juan Carlos",
-  "apellido": "Pérez García",
-  "telefono": "6141234567",
-  "direccion": "Nueva Calle #456",
-  "id_municipio": 14
+  "nombre": "string",
+  "apellido": "string",
+  "telefono": "string",
+  "direccion": "string",
+  "id_municipio": "integer"
 }
 ```
 
-### Update Password
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Perfil actualizado exitosamente",
+  "user": { /* updated user data */ }
+}
+```
+
+### Change Password
 ```http
 PUT /api/users/password
-Authorization: Required
-Content-Type: application/json
+```
+🔒 **Requires authentication**
 
+**Body:**
+```json
 {
-  "currentPassword": "password123",
-  "newPassword": "newpassword456"
+  "currentPassword": "string",
+  "newPassword": "string (min 8 chars)"
 }
 ```
 
-### Delete Account
-```http
-DELETE /api/users/profile
-Authorization: Required
-Content-Type: application/json
-
+**Response:**
+```json
 {
-  "password": "password123"
+  "success": true,
+  "message": "Contraseña actualizada exitosamente"
 }
 ```
 
@@ -104,311 +166,470 @@ Content-Type: application/json
 ### Get All Medicines
 ```http
 GET /api/medicines
-Query params:
-  - tipo: sin_receta | con_receta
-  - activo: true | false
+```
+
+**Query Parameters:**
+- `tipo` (optional): `con_receta` | `sin_receta`
+
+**Response:**
+```json
+{
+  "success": true,
+  "count": 10,
+  "medicamentos": [
+    {
+      "id_medicamento": 1,
+      "nombre": "Paracetamol 500mg",
+      "tipo": "sin_receta",
+      "descripcion": "Analgésico y antipirético",
+      "presentacion": "Tabletas",
+      "cantidad_disponible": 100
+    }
+  ]
+}
 ```
 
 ### Search Medicines
 ```http
-GET /api/medicines/search?nombre=paracetamol
+GET /api/medicines/search?q=paracetamol
 ```
 
-### Get Medicine Summary (with inventory)
-```http
-GET /api/medicines/summary
-```
+**Query Parameters:**
+- `q` (required): Search query
+
+**Response:** Same as Get All Medicines
 
 ### Get Medicine by ID
 ```http
 GET /api/medicines/:id
 ```
 
-### Create Medicine (Admin only)
-```http
-POST /api/medicines
-Authorization: Required (admin)
-Content-Type: application/json
-
+**Response:**
+```json
 {
-  "nombre": "Ibuprofeno 600mg",
-  "tipo": "sin_receta",
-  "descripcion": "Antiinflamatorio no esteroideo"
+  "success": true,
+  "medicamento": {
+    "id_medicamento": 1,
+    "nombre": "Paracetamol 500mg",
+    "tipo": "sin_receta",
+    "descripcion": "Analgésico y antipirético",
+    "presentacion": "Tabletas",
+    "cantidad_disponible": 100
+  }
 }
-```
-
-### Update Medicine (Admin only)
-```http
-PUT /api/medicines/:id
-Authorization: Required (admin)
-Content-Type: application/json
-
-{
-  "nombre": "Ibuprofeno 800mg",
-  "tipo": "con_receta",
-  "descripcion": "Antiinflamatorio no esteroideo de alta dosis"
-}
-```
-
-### Deactivate Medicine (Admin only)
-```http
-DELETE /api/medicines/:id
-Authorization: Required (admin)
 ```
 
 ---
 
-## 🎁 Donation Endpoints
+## 💝 Donation Endpoints
 
-### Get All Donations
+### Get Donations
 ```http
 GET /api/donations
-Authorization: Required
-Query params:
-  - estatus: pendiente | aceptada | rechazada
-  
-Note: Usuarios regulares solo ven sus propias donaciones
-      Admins ven todas las donaciones
 ```
+🔒 **Requires authentication**
 
-### Get Pending Donations (Admin only)
-```http
-GET /api/donations/pending
-Authorization: Required (admin)
-```
+**Query Parameters:**
+- `estatus` (optional): `pendiente` | `aprobada` | `rechazada`
 
-### Get Donation Stats (Admin only)
-```http
-GET /api/donations/stats
-Authorization: Required (admin)
-```
+**Note:** Regular users see only their donations, admins see all
 
-### Get Donation by ID
-```http
-GET /api/donations/:id
-Authorization: Required
+**Response:**
+```json
+{
+  "success": true,
+  "count": 5,
+  "donaciones": [
+    {
+      "id_donacion": 1,
+      "id_medicamento": 1,
+      "nombre_medicamento": "Paracetamol 500mg",
+      "cantidad": 50,
+      "fecha_caducidad": "2025-12-31",
+      "estatus": "pendiente",
+      "imagen": "url_to_image",
+      "observaciones": "En buen estado",
+      "created_at": "2024-12-07T12:00:00Z"
+    }
+  ]
+}
 ```
 
 ### Create Donation
 ```http
 POST /api/donations
-Authorization: Required
-Content-Type: multipart/form-data
+```
+🔒 **Requires authentication**  
+**Content-Type:** `multipart/form-data`
 
-Form data:
-  - id_medicamento: number
-  - lote: string
-  - fecha_caducidad: YYYY-MM-DD
-  - miligramos: number
-  - cantidad: number
-  - descripcion: string (optional)
-  - imagen: file (JPG/PNG, max 5MB)
+**Body:**
+```
+id_medicamento: integer
+cantidad: integer
+fecha_caducidad: date (YYYY-MM-DD)
+observaciones: string (optional)
+imagen: file (required)
 ```
 
-### Accept Donation (Admin only)
-```http
-PUT /api/donations/:id/accept
-Authorization: Required (admin)
-```
-
-### Reject Donation (Admin only)
-```http
-PUT /api/donations/:id/reject
-Authorization: Required (admin)
-Content-Type: application/json
-
+**Response:**
+```json
 {
-  "razon_rechazo": "Medicamento no apto para donación"
+  "success": true,
+  "message": "Donación creada exitosamente",
+  "donacion": { /* donation data */ }
 }
 ```
 
+### Accept Donation (Admin)
+```http
+PUT /api/donations/:id/accept
+```
+🔒 **Requires authentication (admin)**
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Donación aceptada"
+}
+```
+
+### Reject Donation (Admin)
+```http
+PUT /api/donations/:id/reject
+```
+🔒 **Requires authentication (admin)**
+
+**Body:**
+```json
+{
+  "motivo": "string (optional)"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Donación rechazada"
+}
+```
+
+### Get Pending Donations (Admin)
+```http
+GET /api/donations/pending
+```
+🔒 **Requires authentication (admin)**
+
+**Response:** Same as Get Donations
+
 ---
 
-## 🏥 Patient Request Endpoints
+## 🏥 Request Endpoints
 
-### Get All Requests
+### Get Requests
 ```http
 GET /api/requests
-Authorization: Required
-Query params:
-  - estatus: pendiente | aprobada | rechazada | entregada
-  
-Note: Usuarios regulares solo ven sus propias solicitudes
-      Admins ven todas las solicitudes
 ```
+🔒 **Requires authentication**
 
-### Get Pending Requests (Admin only)
-```http
-GET /api/requests/pending
-Authorization: Required (admin)
-```
+**Query Parameters:**
+- `estatus` (optional): `pendiente` | `aprobada` | `rechazada` | `entregada`
 
-### Get Request Stats (Admin only)
-```http
-GET /api/requests/stats
-Authorization: Required (admin)
-```
+**Note:** Regular users see only their requests, admins see all
 
-### Get Request by ID
-```http
-GET /api/requests/:id
-Authorization: Required
+**Response:**
+```json
+{
+  "success": true,
+  "count": 3,
+  "solicitudes": [
+    {
+      "id_solicitud": 1,
+      "id_medicamento": 1,
+      "nombre_medicamento": "Paracetamol 500mg",
+      "cantidad_solicitada": 10,
+      "justificacion": "Dolor de cabeza frecuente",
+      "receta": "url_to_prescription",
+      "estatus": "pendiente",
+      "created_at": "2024-12-07T12:00:00Z"
+    }
+  ]
+}
 ```
 
 ### Create Request
 ```http
 POST /api/requests
-Authorization: Required
-Content-Type: multipart/form-data
+```
+🔒 **Requires authentication**  
+**Content-Type:** `multipart/form-data`
 
-Form data:
-  - id_medicamento: number
-  - cantidad_solicitada: number
-  - motivo: string
-  - receta: file (JPG/PNG/PDF, max 5MB) - OBLIGATORIO si medicamento requiere receta
+**Body:**
+```
+id_medicamento: integer
+cantidad_solicitada: integer
+justificacion: string
+receta: file (required if medicine tipo is "con_receta")
 ```
 
-### Approve Request (Admin only)
-```http
-PUT /api/requests/:id/approve
-Authorization: Required (admin)
-```
-
-### Reject Request (Admin only)
-```http
-PUT /api/requests/:id/reject
-Authorization: Required (admin)
-Content-Type: application/json
-
+**Response:**
+```json
 {
-  "razon_rechazo": "Receta no válida"
+  "success": true,
+  "message": "Solicitud creada exitosamente",
+  "solicitud": { /* request data */ }
 }
 ```
 
-### Deliver Request (Admin only)
+### Approve Request (Admin)
+```http
+PUT /api/requests/:id/approve
+```
+🔒 **Requires authentication (admin)**
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Solicitud aprobada"
+}
+```
+
+### Reject Request (Admin)
+```http
+PUT /api/requests/:id/reject
+```
+🔒 **Requires authentication (admin)**
+
+**Body:**
+```json
+{
+  "motivo": "string (optional)"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Solicitud rechazada"
+}
+```
+
+### Deliver Request (Admin)
 ```http
 PUT /api/requests/:id/deliver
-Authorization: Required (admin)
-
-Note: Esto registra la entrega física y actualiza el inventario automáticamente
 ```
+🔒 **Requires authentication (admin)**
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Solicitud marcada como entregada"
+}
+```
+
+### Get Pending Requests (Admin)
+```http
+GET /api/requests/pending
+```
+🔒 **Requires authentication (admin)**
+
+**Response:** Same as Get Requests
 
 ---
 
 ## 📦 Inventory Endpoints
 
-### Get All Inventory (Admin only)
+### Get Inventory
 ```http
 GET /api/inventory
-Authorization: Required (admin)
+```
+🔒 **Requires authentication (admin)**
+
+**Response:**
+```json
+{
+  "success": true,
+  "inventario": [
+    {
+      "id_inventario": 1,
+      "id_medicamento": 1,
+      "nombre_medicamento": "Paracetamol 500mg",
+      "cantidad": 100,
+      "fecha_caducidad": "2025-12-31",
+      "lote": "LOT123",
+      "disponible": true
+    }
+  ]
+}
 ```
 
 ### Get Inventory Summary
 ```http
 GET /api/inventory/summary
-Authorization: Required
 ```
+🔒 **Requires authentication**
 
-### Get Expiring Medicines
-```http
-GET /api/inventory/expiring
-Authorization: Required
-Query params:
-  - dias: number (default: 90)
-```
-
-### Get Expired Medicines
-```http
-GET /api/inventory/expired
-Authorization: Required
-```
-
-### Get Inventory Stats (Admin only)
-```http
-GET /api/inventory/stats
-Authorization: Required (admin)
-```
-
-### Get Inventory by Medicine
-```http
-GET /api/inventory/medicine/:id
-Authorization: Required
-```
-
-### Adjust Inventory (Admin only)
-```http
-PUT /api/inventory/:id/adjust
-Authorization: Required (admin)
-Content-Type: application/json
-
+**Response:**
+```json
 {
-  "cantidad_nueva": 50,
-  "motivo": "Corrección de conteo físico"
+  "success": true,
+  "resumen": {
+    "total_medicamentos": 10,
+    "total_unidades": 500,
+    "proximos_vencer": 5,
+    "vencidos": 2
+  }
 }
-```
-
-### Mark as Expired (Admin only)
-```http
-PUT /api/inventory/:id/expire
-Authorization: Required (admin)
 ```
 
 ---
 
-## 🌎 Municipio Endpoints
+## 🏛️ Municipality Endpoints
 
-### Get All Municipios
+### Get All Municipalities
 ```http
 GET /api/municipios
 ```
 
-### Get Municipio by ID
+**Response:**
+```json
+{
+  "success": true,
+  "municipios": [
+    {
+      "id_municipio": 1,
+      "nombre": "Chihuahua"
+    },
+    {
+      "id_municipio": 2,
+      "nombre": "Juárez"
+    }
+  ]
+}
+```
+
+### Get Municipality by ID
 ```http
 GET /api/municipios/:id
 ```
 
----
-
-## Response Format
-
-### Success Response
+**Response:**
 ```json
 {
   "success": true,
-  "message": "Operation completed successfully",
-  "data": {}
+  "municipio": {
+    "id_municipio": 1,
+    "nombre": "Chihuahua"
+  }
 }
 ```
 
-### Error Response
+---
+
+## 🔒 Error Responses
+
+### 400 Bad Request
 ```json
 {
   "success": false,
-  "message": "Error description",
-  "error": "Detailed error message"
+  "message": "Validation error message"
+}
+```
+
+### 401 Unauthorized
+```json
+{
+  "success": false,
+  "message": "No token provided" | "Invalid or expired token"
+}
+```
+
+### 403 Forbidden
+```json
+{
+  "success": false,
+  "message": "Admin access required"
+}
+```
+
+### 404 Not Found
+```json
+{
+  "success": false,
+  "message": "Resource not found"
+}
+```
+
+### 500 Internal Server Error
+```json
+{
+  "success": false,
+  "message": "Error message",
+  "error": "Detailed error (only in development)"
 }
 ```
 
 ---
 
-## Status Codes
+## 📝 Notes
 
-- `200` - OK
-- `201` - Created
-- `400` - Bad Request
-- `401` - Unauthorized
-- `403` - Forbidden
-- `404` - Not Found
-- `500` - Internal Server Error
+1. **JWT Token**: Expires in 7 days. Store securely in localStorage
+2. **File Uploads**: Maximum size 10MB for images
+3. **Dates**: Use ISO 8601 format (YYYY-MM-DD)
+4. **Pagination**: Not yet implemented (returns all results)
+5. **Rate Limiting**: Not yet implemented
 
 ---
 
-## Notes
+## 🧪 Testing
 
-1. **File Uploads**: Use `multipart/form-data` for endpoints that accept files
-2. **Authentication**: After login, session cookie is set automatically
-3. **Admin Actions**: Routes marked with "(Admin only)" require admin or super_admin role
-4. **Automatic Triggers**: 
-   - Accepting a donation automatically adds it to inventory
-   - Delivering a request automatically reduces inventory (FIFO)
-5. **CORS**: Frontend must be on `http://localhost:5173` or update FRONTEND_URL in `.env`
+### Using cURL
+
+```bash
+# Register
+curl -X POST http://localhost:5001/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Test","apellido":"User","email":"test@example.com","password":"password123","telefono":"1234567890","direccion":"Test Address","id_municipio":1}'
+
+# Login
+curl -X POST http://localhost:5001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"password123"}'
+
+# Get medicines (with token)
+curl http://localhost:5001/api/medicines \
+  -H "Authorization: Bearer YOUR_TOKEN_HERE"
+```
+
+### Using JavaScript
+
+```javascript
+// Login
+const response = await fetch('http://localhost:5001/api/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: 'test@example.com',
+    password: 'password123'
+  })
+});
+
+const { token, user } = await response.json();
+localStorage.setItem('token', token);
+
+// Authenticated request
+const medicines = await fetch('http://localhost:5001/api/medicines', {
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  }
+});
+```
+
+---
+
+**Last Updated:** December 7, 2024  
+**API Version:** 1.0.0

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as requestController from '../controllers/request.controller.js';
-import { isAuthenticated } from '../middleware/auth.js';
+import { isAuthenticated } from '../middleware/jwt.js';
 import { upload } from '../middleware/upload.js';
 
 const router = Router();

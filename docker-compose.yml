@@ -6,11 +6,12 @@ services:
     image: mysql:8.0
     container_name: aidmeds_mysql
     restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: aidmeds
-      MYSQL_USER: aidmeds_user
-      MYSQL_PASSWORD: aidmeds_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-aidmeds}
+      MYSQL_USER: ${MYSQL_USER:-aidmeds_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-aidmeds_password}
     ports:
       - "3306:3306"
     volumes:
@@ -19,7 +20,7 @@ services:
     networks:
       - aidmeds_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpassword}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -35,16 +36,16 @@ services:
       - "5001:5000"
     environment:
       PORT: 5000
-      NODE_ENV: production
+      NODE_ENV: ${NODE_ENV:-production}
       DB_HOST: mysql
-      DB_USER: aidmeds_user
-      DB_PASS: aidmeds_password
-      DB_NAME: aidmeds
-      SESSION_SECRET: your_session_secret_change_in_production
+      DB_USER: ${MYSQL_USER:-aidmeds_user}
+      DB_PASS: ${MYSQL_PASSWORD:-aidmeds_password}
+      DB_NAME: ${MYSQL_DATABASE:-aidmeds}
+      JWT_SECRET: ${JWT_SECRET:-aidmeds_jwt_secret_change_in_production}
       CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
       CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
-      FRONTEND_URL: http://localhost:5173
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost}
     depends_on:
       mysql:
         condition: service_healthy
@@ -53,24 +54,21 @@ services:
     volumes:
       - ./backend/public/files:/app/public/files
 
-  # Frontend
+  # Frontend React App
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:5001/api}
     container_name: aidmeds_frontend
     restart: unless-stopped
     ports:
-      - "5173:5173"
-    environment:
-      VITE_API_URL: http://localhost:5001/api
+      - "80:80"
     depends_on:
       - backend
     networks:
       - aidmeds_network
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
 
 volumes:
   mysql_data:
