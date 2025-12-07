@@ -1,6 +1,6 @@
 # 📡 API Documentation - AidMeds
 
-Base URL: `http://localhost:5001/api`
+Base URL: `http://localhost:5000/api`
 
 ## Authentication
 
@@ -591,17 +591,17 @@ GET /api/municipios/:id
 
 ```bash
 # Register
-curl -X POST http://localhost:5001/api/auth/register \
+curl -X POST http://localhost:5000/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"nombre":"Test","apellido":"User","email":"test@example.com","password":"password123","telefono":"1234567890","direccion":"Test Address","id_municipio":1}'
 
 # Login
-curl -X POST http://localhost:5001/api/auth/login \
+curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password123"}'
 
 # Get medicines (with token)
-curl http://localhost:5001/api/medicines \
+curl http://localhost:5000/api/medicines \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 
@@ -609,7 +609,7 @@ curl http://localhost:5001/api/medicines \
 
 ```javascript
 // Login
-const response = await fetch('http://localhost:5001/api/auth/login', {
+const response = await fetch('http://localhost:5000/api/auth/login', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -622,7 +622,7 @@ const { token, user } = await response.json();
 localStorage.setItem('token', token);
 
 // Authenticated request
-const medicines = await fetch('http://localhost:5001/api/medicines', {
+const medicines = await fetch('http://localhost:5000/api/medicines', {
   headers: {
     'Authorization': `Bearer ${localStorage.getItem('token')}`
   }
