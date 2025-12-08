@@ -62,8 +62,8 @@ class Donacion {
 
         const result = await pool.query(
             `INSERT INTO donaciones 
-             (id_donante, id_medicamento, lote, fecha_caducidad, presentacion, miligramos, cantidad, ruta_imagen, created_at, updated_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
+             (id_donante, id_medicamento, lote, fecha_caducidad, presentacion, miligramos, cantidad, ruta_imagen)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
             [id_donante, id_medicamento, lote, fecha_caducidad, presentacion, miligramos, cantidad, ruta_imagen]
         );
 
@@ -73,7 +73,7 @@ class Donacion {
     static async updateEstatus(id, estatus, revisado_por, razon_rechazo = null) {
         await pool.query(
             `UPDATE donaciones 
-             SET estatus = ?, revisado_por = ?, razon_rechazo = ?, fecha_revision = NOW(), updated_at = NOW()
+             SET estatus = ?, revisado_por = ?, razon_rechazo = ?, fecha_revision = NOW()
              WHERE id_donacion = ?`,
             [estatus, revisado_por, razon_rechazo, id]
         );
