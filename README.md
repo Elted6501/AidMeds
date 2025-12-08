@@ -412,4 +412,4 @@ Gracias por usar AidMeds para ayudar a tu comunidad a acceder a medicamentos ese
 ---
 
 **Versión:** 1.0.0  
-**Última actualización:** Diciembre 7, 2024
+**Última actualización:** Diciembre 7, 2025
