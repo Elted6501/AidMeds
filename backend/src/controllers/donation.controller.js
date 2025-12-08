@@ -102,6 +102,14 @@ export const createDonation = async (req, res) => {
             cantidad
         } = req.body;
 
+        // Validar campos requeridos
+        if (!id_medicamento || !fecha_caducidad || !presentacion || !miligramos || !cantidad) {
+            return res.status(400).json({
+                success: false,
+                message: 'Faltan campos requeridos: id_medicamento, fecha_caducidad, presentacion, miligramos, cantidad'
+            });
+        }
+
         // Validar que el medicamento existe
         const medicamento = await Medicamento.findById(id_medicamento);
         if (!medicamento) {
