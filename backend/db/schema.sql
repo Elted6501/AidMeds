@@ -65,10 +65,10 @@ CREATE TABLE donaciones (
     id_medicamento INT NOT NULL,
     lote VARCHAR(50) NOT NULL,
     fecha_caducidad DATE NOT NULL,
-    miligramos INT NOT NULL,
-    cantidad INT NOT NULL,
+    presentacion ENUM('tableta', 'capsula', 'jarabe', 'suspension', 'ampolleta', 'crema', 'gel', 'ungüento', 'supositorio', 'ovulo', 'parche', 'inhalador', 'solucion', 'polvo') NOT NULL COMMENT 'Forma farmacéutica del medicamento',
+    miligramos INT NOT NULL COMMENT 'Concentración por unidad (mg)',
+    cantidad INT NOT NULL COMMENT 'Número de unidades donadas',
     ruta_imagen VARCHAR(255),
-    descripcion TEXT,
     estatus ENUM('pendiente', 'aceptada', 'rechazada', 'entregada') NOT NULL DEFAULT 'pendiente',
     razon_rechazo TEXT,
     revisado_por INT,
@@ -81,7 +81,8 @@ CREATE TABLE donaciones (
     INDEX idx_estatus (estatus),
     INDEX idx_donante (id_donante),
     INDEX idx_fecha_caducidad (fecha_caducidad),
-    INDEX idx_created (created_at)
+    INDEX idx_created (created_at),
+    INDEX idx_presentacion (presentacion)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Solicitudes de Pacientes (usuarios solicitan medicamentos)
@@ -113,6 +114,7 @@ CREATE TABLE inventario (
     id_medicamento INT NOT NULL,
     lote VARCHAR(50) NOT NULL,
     fecha_caducidad DATE NOT NULL,
+    presentacion ENUM('tableta', 'capsula', 'jarabe', 'suspension', 'ampolleta', 'crema', 'gel', 'ungüento', 'supositorio', 'ovulo', 'parche', 'inhalador', 'solucion', 'polvo') NOT NULL,
     miligramos INT NOT NULL,
     cantidad_actual INT NOT NULL DEFAULT 0,
     cantidad_inicial INT NOT NULL,
@@ -125,6 +127,7 @@ CREATE TABLE inventario (
     INDEX idx_fecha_caducidad (fecha_caducidad),
     INDEX idx_lote (lote),
     INDEX idx_cantidad (cantidad_actual),
+    INDEX idx_presentacion (presentacion),
     UNIQUE KEY unique_lote_medicamento (id_medicamento, lote)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -206,6 +209,7 @@ BEGIN
             id_medicamento,
             lote,
             fecha_caducidad,
+            presentacion,
             miligramos,
             cantidad_actual,
             cantidad_inicial,
@@ -215,6 +219,7 @@ BEGIN
             NEW.id_medicamento,
             NEW.lote,
             NEW.fecha_caducidad,
+            NEW.presentacion,
             NEW.miligramos,
             NEW.cantidad,
             NEW.cantidad,
@@ -320,6 +325,7 @@ SELECT
     m.tipo,
     i.lote,
     i.fecha_caducidad,
+    i.presentacion,
     i.miligramos,
     i.cantidad_actual,
     i.fecha_ingreso,
@@ -345,9 +351,9 @@ SELECT
     u.telefono AS donante_telefono,
     d.lote,
     d.fecha_caducidad,
+    d.presentacion,
     d.miligramos,
     d.cantidad,
-    d.descripcion,
     d.ruta_imagen,
     d.created_at AS fecha_solicitud,
     DATEDIFF(CURDATE(), d.created_at) AS dias_pendiente

@@ -146,6 +146,15 @@ const MyDonations = () => {
                                         
                                         <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600 mt-4">
                                             <div>
+                                                <span className="font-medium">Lote:</span> {donation.lote}
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Presentación:</span> {donation.presentacion}
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Concentración:</span> {donation.miligramos} mg
+                                            </div>
+                                            <div>
                                                 <span className="font-medium">Cantidad:</span> {donation.cantidad} unidades
                                             </div>
                                             <div>
@@ -154,7 +163,7 @@ const MyDonations = () => {
                                             </div>
                                             <div>
                                                 <span className="font-medium">Fecha donación:</span>{' '}
-                                                {new Date(donation.fecha_donacion).toLocaleDateString()}
+                                                {new Date(donation.created_at).toLocaleDateString()}
                                             </div>
                                         </div>
 

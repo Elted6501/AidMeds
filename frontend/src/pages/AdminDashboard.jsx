@@ -225,9 +225,12 @@ const DonationsManager = ({ onUpdate }) => {
                                     </div>
                                     <div className="grid md:grid-cols-4 gap-4 text-sm text-gray-600 mt-2">
                                         <div><span className="font-medium">Donante:</span> {donation.nombre_usuario}</div>
-                                        <div><span className="font-medium">Cantidad:</span> {donation.cantidad}</div>
+                                        <div><span className="font-medium">Lote:</span> {donation.lote}</div>
+                                        <div><span className="font-medium">Presentación:</span> {donation.presentacion}</div>
+                                        <div><span className="font-medium">Concentración:</span> {donation.miligramos} mg</div>
+                                        <div><span className="font-medium">Cantidad:</span> {donation.cantidad} unidades</div>
                                         <div><span className="font-medium">Caducidad:</span> {new Date(donation.fecha_caducidad).toLocaleDateString()}</div>
-                                        <div><span className="font-medium">Fecha:</span> {new Date(donation.fecha_donacion).toLocaleDateString()}</div>
+                                        <div><span className="font-medium">Fecha:</span> {new Date(donation.created_at).toLocaleDateString()}</div>
                                     </div>
                                     {donation.imagen_url && (
                                         <img src={donation.imagen_url} alt="Medicamento" className="mt-3 h-24 w-24 object-cover rounded" />

@@ -97,9 +97,9 @@ export const createDonation = async (req, res) => {
             id_medicamento,
             lote,
             fecha_caducidad,
+            presentacion,
             miligramos,
-            cantidad,
-            descripcion
+            cantidad
         } = req.body;
 
         // Validar que el medicamento existe
@@ -108,6 +108,15 @@ export const createDonation = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: 'Medicamento no encontrado'
+            });
+        }
+
+        // Validar presentacion
+        const presentacionesValidas = ['tableta', 'capsula', 'jarabe', 'suspension', 'ampolleta', 'crema', 'gel', 'ungüento', 'supositorio', 'ovulo', 'parche', 'inhalador', 'solucion', 'polvo'];
+        if (!presentacionesValidas.includes(presentacion)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Presentación no válida'
             });
         }
 
@@ -128,10 +137,10 @@ export const createDonation = async (req, res) => {
             id_medicamento,
             lote: lote.toUpperCase(),
             fecha_caducidad,
+            presentacion,
             miligramos,
             cantidad,
-            ruta_imagen,
-            descripcion
+            ruta_imagen
         });
 
         const donacion = await Donacion.findById(donacionId);

@@ -7,8 +7,11 @@ const Donate = () => {
     const [medicines, setMedicines] = useState([]);
     const [formData, setFormData] = useState({
         id_medicamento: '',
-        cantidad: '',
+        lote: '',
         fecha_caducidad: '',
+        presentacion: '',
+        miligramos: '',
+        cantidad: '',
         imagen: null
     });
     const [loading, setLoading] = useState(false);
@@ -62,8 +65,11 @@ const Donate = () => {
         try {
             const formDataToSend = new FormData();
             formDataToSend.append('id_medicamento', formData.id_medicamento);
-            formDataToSend.append('cantidad', formData.cantidad);
+            formDataToSend.append('lote', formData.lote);
             formDataToSend.append('fecha_caducidad', formData.fecha_caducidad);
+            formDataToSend.append('presentacion', formData.presentacion);
+            formDataToSend.append('miligramos', formData.miligramos);
+            formDataToSend.append('cantidad', formData.cantidad);
             if (formData.imagen) {
                 formDataToSend.append('imagen', formData.imagen);
             }
@@ -74,8 +80,11 @@ const Donate = () => {
                 setSuccess('¡Donación registrada exitosamente!');
                 setFormData({
                     id_medicamento: '',
-                    cantidad: '',
+                    lote: '',
                     fecha_caducidad: '',
+                    presentacion: '',
+                    miligramos: '',
+                    cantidad: '',
                     imagen: null
                 });
                 // Reset file input
@@ -167,21 +176,24 @@ const Donate = () => {
                             )}
                         </div>
 
-                        {/* Quantity */}
+                        {/* Lote */}
                         <div>
-                            <label htmlFor="cantidad" className="block text-sm font-medium text-gray-700 mb-2">
-                                Cantidad (unidades o cajas) *
+                            <label htmlFor="lote" className="block text-sm font-medium text-gray-700 mb-2">
+                                Número de Lote *
                             </label>
                             <input
-                                id="cantidad"
-                                name="cantidad"
-                                type="number"
-                                min="1"
+                                id="lote"
+                                name="lote"
+                                type="text"
                                 required
                                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                value={formData.cantidad}
+                                value={formData.lote}
                                 onChange={handleChange}
+                                placeholder="Ej: ABC123"
                             />
+                            <p className="mt-1 text-sm text-gray-500">
+                                Número de lote que aparece en el empaque del medicamento
+                            </p>
                         </div>
 
                         {/* Expiration Date */}
@@ -199,6 +211,79 @@ const Donate = () => {
                                 value={formData.fecha_caducidad}
                                 onChange={handleChange}
                             />
+                        </div>
+
+                        {/* Presentacion */}
+                        <div>
+                            <label htmlFor="presentacion" className="block text-sm font-medium text-gray-700 mb-2">
+                                Presentación *
+                            </label>
+                            <select
+                                id="presentacion"
+                                name="presentacion"
+                                required
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                value={formData.presentacion}
+                                onChange={handleChange}
+                            >
+                                <option value="">Selecciona la presentación</option>
+                                <option value="tableta">Tableta</option>
+                                <option value="capsula">Cápsula</option>
+                                <option value="jarabe">Jarabe</option>
+                                <option value="suspension">Suspensión</option>
+                                <option value="ampolleta">Ampolleta</option>
+                                <option value="crema">Crema</option>
+                                <option value="gel">Gel</option>
+                                <option value="ungüento">Ungüento</option>
+                                <option value="supositorio">Supositorio</option>
+                                <option value="ovulo">Óvulo</option>
+                                <option value="parche">Parche</option>
+                                <option value="inhalador">Inhalador</option>
+                                <option value="solucion">Solución</option>
+                                <option value="polvo">Polvo</option>
+                            </select>
+                        </div>
+
+                        {/* Miligramos */}
+                        <div>
+                            <label htmlFor="miligramos" className="block text-sm font-medium text-gray-700 mb-2">
+                                Concentración (mg) *
+                            </label>
+                            <input
+                                id="miligramos"
+                                name="miligramos"
+                                type="number"
+                                min="1"
+                                required
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                value={formData.miligramos}
+                                onChange={handleChange}
+                                placeholder="Ej: 500"
+                            />
+                            <p className="mt-1 text-sm text-gray-500">
+                                Concentración en miligramos por unidad (tableta, cápsula, ml, etc.)
+                            </p>
+                        </div>
+
+                        {/* Quantity */}
+                        <div>
+                            <label htmlFor="cantidad" className="block text-sm font-medium text-gray-700 mb-2">
+                                Cantidad de Unidades *
+                            </label>
+                            <input
+                                id="cantidad"
+                                name="cantidad"
+                                type="number"
+                                min="1"
+                                required
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                                value={formData.cantidad}
+                                onChange={handleChange}
+                                placeholder="Ej: 10"
+                            />
+                            <p className="mt-1 text-sm text-gray-500">
+                                Número de tabletas, cápsulas, ml, etc. que deseas donar
+                            </p>
                         </div>
 
                         {/* Image Upload */}

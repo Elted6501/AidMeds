@@ -54,17 +54,17 @@ class Donacion {
             id_medicamento,
             lote,
             fecha_caducidad,
+            presentacion,
             miligramos,
             cantidad,
-            ruta_imagen,
-            descripcion
+            ruta_imagen
         } = donacionData;
 
         const result = await pool.query(
             `INSERT INTO donaciones 
-             (id_donante, id_medicamento, lote, fecha_caducidad, miligramos, cantidad, ruta_imagen, descripcion, created_at, updated_at)
+             (id_donante, id_medicamento, lote, fecha_caducidad, presentacion, miligramos, cantidad, ruta_imagen, created_at, updated_at)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-            [id_donante, id_medicamento, lote, fecha_caducidad, miligramos, cantidad, ruta_imagen, descripcion]
+            [id_donante, id_medicamento, lote, fecha_caducidad, presentacion, miligramos, cantidad, ruta_imagen]
         );
 
         return result.insertId;
