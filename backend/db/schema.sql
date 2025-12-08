@@ -112,7 +112,7 @@ CREATE TABLE solicitudes_paciente (
 CREATE TABLE inventario (
     id_inventario INT AUTO_INCREMENT PRIMARY KEY,
     id_medicamento INT NOT NULL,
-    lote VARCHAR(50) NOT NULL,
+    lote VARCHAR(50),
     fecha_caducidad DATE NOT NULL,
     presentacion ENUM('tableta', 'capsula', 'jarabe', 'suspension', 'ampolleta', 'crema', 'gel', 'ungüento', 'supositorio', 'ovulo', 'parche', 'inhalador', 'solucion', 'polvo') NOT NULL,
     miligramos INT NOT NULL,
@@ -206,8 +206,16 @@ AFTER UPDATE ON donaciones
 FOR EACH ROW
 BEGIN
     DECLARE inv_id INT;
+    DECLARE lote_generado VARCHAR(50);
     
     IF NEW.estatus = 'aceptada' AND OLD.estatus != 'aceptada' THEN
+        -- Generar lote automático si es NULL
+        IF NEW.lote IS NULL THEN
+            SET lote_generado = CONCAT('AUTO-', DATE_FORMAT(NOW(), '%Y%m%d'), '-', NEW.id_donacion);
+        ELSE
+            SET lote_generado = NEW.lote;
+        END IF;
+        
         -- Intentar insertar o actualizar inventario
         INSERT INTO inventario (
             id_medicamento,
@@ -221,7 +229,7 @@ BEGIN
             fecha_ingreso
         ) VALUES (
             NEW.id_medicamento,
-            NEW.lote,
+            lote_generado,
             NEW.fecha_caducidad,
             NEW.presentacion,
             NEW.miligramos,
@@ -239,7 +247,7 @@ BEGIN
         IF inv_id = 0 THEN
             SELECT id_inventario INTO inv_id 
             FROM inventario 
-            WHERE id_medicamento = NEW.id_medicamento AND lote = NEW.lote;
+            WHERE id_medicamento = NEW.id_medicamento AND lote = lote_generado;
         END IF;
         
         -- Registrar movimiento de entrada

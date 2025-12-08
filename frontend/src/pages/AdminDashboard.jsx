@@ -182,9 +182,8 @@ const DonationsManager = ({ onUpdate }) => {
     const getStatusBadge = (estado) => {
         const styles = {
             pendiente: 'bg-yellow-100 text-yellow-800',
-            aprobada: 'bg-green-100 text-green-800',
-            rechazada: 'bg-red-100 text-red-800',
-            entregada: 'bg-blue-100 text-blue-800'
+            aceptada: 'bg-green-100 text-green-800',
+            rechazada: 'bg-red-100 text-red-800'
         };
         return styles[estado] || 'bg-gray-100 text-gray-800';
     };
@@ -203,9 +202,8 @@ const DonationsManager = ({ onUpdate }) => {
                     className="px-4 py-2 border border-gray-300 rounded-md"
                 >
                     <option value="pendiente">Pendientes</option>
-                    <option value="aprobada">Aprobadas</option>
+                    <option value="aceptada">Aceptadas</option>
                     <option value="rechazada">Rechazadas</option>
-                    <option value="entregada">Entregadas</option>
                     <option value="todas">Todas</option>
                 </select>
             </div>
