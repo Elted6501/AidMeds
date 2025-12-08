@@ -19,12 +19,6 @@ export const medicineService = {
         return response.data;
     },
 
-    // Get medicines by type (con_receta, sin_receta)
-    getByType: async (type) => {
-        const response = await api.get(`/medicines/type/${type}`);
-        return response.data;
-    },
-
     // Create new medicine (admin only)
     create: async (medicineData) => {
         const response = await api.post('/medicines', medicineData);

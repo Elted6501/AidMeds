@@ -29,9 +29,15 @@ export const donationService = {
         return response.data;
     },
 
-    // Update donation status (admin)
-    updateStatus: async (id, status) => {
-        const response = await api.put(`/donations/${id}/status`, { estado: status });
+    // Accept donation (admin)
+    accept: async (id) => {
+        const response = await api.put(`/donations/${id}/accept`);
+        return response.data;
+    },
+
+    // Reject donation (admin)
+    reject: async (id, motivo = '') => {
+        const response = await api.put(`/donations/${id}/reject`, { motivo });
         return response.data;
     },
 
@@ -39,5 +45,15 @@ export const donationService = {
     getPending: async () => {
         const response = await api.get('/donations/pending');
         return response.data;
+    },
+
+    // Legacy method for backward compatibility
+    updateStatus: async (id, status) => {
+        if (status === 'aprobada' || status === 'aceptada') {
+            return donationService.accept(id);
+        } else if (status === 'rechazada') {
+            return donationService.reject(id);
+        }
+        throw new Error(`Unknown status: ${status}`);
     }
 };
