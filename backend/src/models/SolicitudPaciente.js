@@ -2,20 +2,28 @@ import pool from '../config/database.js';
 
 class SolicitudPaciente {
     static async findAll(filters = {}) {
-        let query = 'SELECT * FROM solicitudes_paciente WHERE 1=1';
+        let query = `SELECT s.*, 
+                     m.nombre as nombre_medicamento, 
+                     m.tipo as tipo_medicamento,
+                     u.nombre as nombre_usuario, 
+                     u.apellido as apellido_usuario
+                     FROM solicitudes_paciente s
+                     JOIN medicamentos m ON s.id_medicamento = m.id_medicamento
+                     JOIN usuarios u ON s.id_paciente = u.id_usuario
+                     WHERE 1=1`;
         const params = [];
 
         if (filters.id_paciente) {
-            query += ' AND id_paciente = ?';
+            query += ' AND s.id_paciente = ?';
             params.push(filters.id_paciente);
         }
 
         if (filters.estatus) {
-            query += ' AND estatus = ?';
+            query += ' AND s.estatus = ?';
             params.push(filters.estatus);
         }
 
-        query += ' ORDER BY created_at DESC';
+        query += ' ORDER BY s.created_at DESC';
 
         return await pool.query(query, params);
     }

@@ -2,20 +2,28 @@ import pool from '../config/database.js';
 
 class Donacion {
     static async findAll(filters = {}) {
-        let query = 'SELECT * FROM donaciones WHERE 1=1';
+        let query = `SELECT d.*, 
+                     m.nombre as nombre_medicamento, 
+                     m.tipo as tipo_medicamento,
+                     u.nombre as nombre_usuario, 
+                     u.apellido as apellido_usuario
+                     FROM donaciones d
+                     JOIN medicamentos m ON d.id_medicamento = m.id_medicamento
+                     JOIN usuarios u ON d.id_donante = u.id_usuario
+                     WHERE 1=1`;
         const params = [];
 
         if (filters.id_donante) {
-            query += ' AND id_donante = ?';
+            query += ' AND d.id_donante = ?';
             params.push(filters.id_donante);
         }
 
         if (filters.estatus) {
-            query += ' AND estatus = ?';
+            query += ' AND d.estatus = ?';
             params.push(filters.estatus);
         }
 
-        query += ' ORDER BY created_at DESC';
+        query += ' ORDER BY d.created_at DESC';
 
         return await pool.query(query, params);
     }
