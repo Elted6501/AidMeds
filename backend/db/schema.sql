@@ -175,17 +175,17 @@ INSERT INTO municipios (id_municipio, nombre) VALUES
 
 -- Insertar Medicamentos Comunes
 INSERT INTO medicamentos (nombre, tipo, descripcion) VALUES
-('Paracetamol 500mg', 'sin_receta', 'Analgésico y antipirético de venta libre'),
-('Ibuprofeno 400mg', 'sin_receta', 'Antiinflamatorio no esteroideo'),
-('Omeprazol 20mg', 'sin_receta', 'Inhibidor de la bomba de protones'),
-('Losartán 50mg', 'con_receta', 'Antihipertensivo'),
-('Metoprolol 50mg', 'con_receta', 'Betabloqueador para hipertensión'),
-('Metformina 850mg', 'con_receta', 'Antidiabético oral'),
-('Atorvastatina 20mg', 'con_receta', 'Hipolipemiante, control de colesterol'),
-('Ácido Acetilsalicílico 100mg', 'sin_receta', 'Antiagregante plaquetario'),
+('Paracetamol', 'sin_receta', 'Analgésico y antipirético de venta libre'),
+('Ibuprofeno', 'sin_receta', 'Antiinflamatorio no esteroideo'),
+('Omeprazol', 'sin_receta', 'Inhibidor de la bomba de protones'),
+('Losartán', 'con_receta', 'Antihipertensivo'),
+('Metoprolol', 'con_receta', 'Betabloqueador para hipertensión'),
+('Metformina', 'con_receta', 'Antidiabético oral'),
+('Atorvastatina', 'con_receta', 'Hipolipemiante, control de colesterol'),
+('Ácido Acetilsalicílico', 'sin_receta', 'Antiagregante plaquetario'),
 ('Insulina NPH', 'con_receta', 'Antidiabético inyectable'),
 ('Insulina Glargina', 'con_receta', 'Antidiabético inyectable de acción prolongada'),
-('Diclofenaco 50mg', 'sin_receta', 'Antiinflamatorio no esteroideo'),
+('Diclofenaco', 'sin_receta', 'Antiinflamatorio no esteroideo'),
 ('Complejo B', 'sin_receta', 'Suplemento vitamínico');
 
 -- ============================================
