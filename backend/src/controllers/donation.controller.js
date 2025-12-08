@@ -135,7 +135,7 @@ export const createDonation = async (req, res) => {
         const donacionId = await Donacion.create({
             id_donante: req.user.id_usuario,
             id_medicamento,
-            lote: lote.toUpperCase(),
+            lote: lote ? lote.toUpperCase() : null,
             fecha_caducidad,
             presentacion,
             miligramos,

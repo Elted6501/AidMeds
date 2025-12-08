@@ -63,7 +63,7 @@ CREATE TABLE donaciones (
     id_donacion INT AUTO_INCREMENT PRIMARY KEY,
     id_donante INT NOT NULL,
     id_medicamento INT NOT NULL,
-    lote VARCHAR(50) NOT NULL,
+    lote VARCHAR(50) COMMENT 'Número de lote (opcional)',
     fecha_caducidad DATE NOT NULL,
     presentacion ENUM('tableta', 'capsula', 'jarabe', 'suspension', 'ampolleta', 'crema', 'gel', 'ungüento', 'supositorio', 'ovulo', 'parche', 'inhalador', 'solucion', 'polvo') NOT NULL COMMENT 'Forma farmacéutica del medicamento',
     miligramos INT NOT NULL COMMENT 'Concentración por unidad (mg)',
@@ -190,6 +190,10 @@ INSERT INTO medicamentos (nombre, tipo, descripcion) VALUES
 ('Insulina Glargina', 'con_receta', 'Antidiabético inyectable de acción prolongada'),
 ('Diclofenaco', 'sin_receta', 'Antiinflamatorio no esteroideo'),
 ('Complejo B', 'sin_receta', 'Suplemento vitamínico');
+
+-- Insertar Usuario Admin Inicial (password: 123456789)
+INSERT INTO usuarios (nombre, apellido, email, password, telefono, direccion, id_municipio, rol) VALUES
+('Admin', 'Principal', 'admin@example.com', '$2a$10$PY9nCeyB359RaraFor3VZ.gUxhlZQJmBhD0/aO3IHCMw231lU0wMa', '1234567890', 'Calle Falsa 123', 14, 'admin');
 
 -- ============================================
 -- TRIGGERS AUTOMÁTICOS

@@ -179,20 +179,19 @@ const Donate = () => {
                         {/* Lote */}
                         <div>
                             <label htmlFor="lote" className="block text-sm font-medium text-gray-700 mb-2">
-                                Número de Lote *
+                                Número de Lote (Opcional)
                             </label>
                             <input
                                 id="lote"
                                 name="lote"
                                 type="text"
-                                required
                                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                                 value={formData.lote}
                                 onChange={handleChange}
                                 placeholder="Ej: ABC123"
                             />
                             <p className="mt-1 text-sm text-gray-500">
-                                Número de lote que aparece en el empaque del medicamento
+                                Número de lote que aparece en el empaque (si está disponible)
                             </p>
                         </div>
 
