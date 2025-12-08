@@ -64,7 +64,7 @@ npm install
 
 Create `.env` file:
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:3000/api
 ```
 
 ### Development Server

@@ -204,7 +204,7 @@ Consulta [`FRONTEND_DOCUMENTATION.md`](./FRONTEND_DOCUMENTATION.md) para guía c
 
 ```env
 # Server
-PORT=5000
+PORT=3000
 NODE_ENV=development
 
 # Database
@@ -228,7 +228,7 @@ FRONTEND_URL=http://localhost:5173
 ### Variables de Entorno Frontend
 
 ```env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:3000/api
 ```
 
 **Nota:** Para Docker, el frontend se construye con la URL del API y se sirve con Vite preview server.
@@ -240,7 +240,7 @@ VITE_API_URL=http://localhost:5000/api
 ### Servicios
 
 - **MySQL** - Base de datos (puerto 3306)
-- **Backend** - API REST (puerto 5000)
+- **Backend** - API REST (puerto 3000)
 - **Frontend** - App React (puerto 5173)
 
 ### Comandos Útiles
@@ -294,10 +294,10 @@ mysql -u root -p aidmeds < backend/db/schema.sql
 
 ```bash
 # Healthcheck
-curl http://localhost:5000/api/medicines
+curl http://localhost:3000/api/medicines
 
 # Login
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","password":"password123"}'
 ```

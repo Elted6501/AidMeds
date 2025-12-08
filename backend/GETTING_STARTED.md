@@ -18,7 +18,7 @@ Crear archivo `.env` en la carpeta `backend/`:
 
 ```env
 # Server
-PORT=5000
+PORT=3000
 NODE_ENV=development
 
 # Database
@@ -52,7 +52,7 @@ npm install
 npm run dev
 ```
 
-El servidor estará corriendo en: **http://localhost:5000**
+El servidor estará corriendo en: **http://localhost:3000**
 
 ## 5. Probar API
 
@@ -60,7 +60,7 @@ El servidor estará corriendo en: **http://localhost:5000**
 
 #### Registrar usuario:
 ```bash
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST http://localhost:3000/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "nombre": "Juan",
@@ -75,7 +75,7 @@ curl -X POST http://localhost:5000/api/auth/register \
 
 #### Login:
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
   -c cookies.txt \
   -d '{
@@ -86,12 +86,12 @@ curl -X POST http://localhost:5000/api/auth/login \
 
 #### Obtener medicamentos:
 ```bash
-curl http://localhost:5000/api/medicines
+curl http://localhost:3000/api/medicines
 ```
 
 #### Ver perfil (requiere autenticación):
 ```bash
-curl http://localhost:5000/api/users/profile \
+curl http://localhost:3000/api/users/profile \
   -b cookies.txt
 ```
 
@@ -117,7 +117,7 @@ WHERE email = 'admin@example.com';
 
 ### Health Check:
 ```bash
-curl http://localhost:5000/api/health
+curl http://localhost:3000/api/health
 ```
 
 Debería responder:
@@ -130,7 +130,7 @@ Debería responder:
 
 ### Verificar Base de Datos:
 ```bash
-curl http://localhost:5000/api/municipios
+curl http://localhost:3000/api/municipios
 ```
 
 Debería devolver 67 municipios de Chihuahua.
@@ -180,9 +180,9 @@ mysql -u root -p aidmeds < db/schema.sql
 - Verificar credenciales en `.env`
 - Verificar que la base de datos existe
 
-### Error: Port 5000 already in use
+### Error: Port 3000 already in use
 - Cambiar PORT en `.env`
-- O matar proceso: `lsof -ti:5000 | xargs kill`
+- O matar proceso: `lsof -ti:3000 | xargs kill`
 
 ### Error: Session not working
 - Verificar que SESSION_SECRET esté en `.env`
