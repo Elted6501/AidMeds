@@ -112,19 +112,19 @@ const MyRequests = () => {
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow">
                         <div className="text-2xl font-bold text-yellow-600">
-                            {requests.filter(r => r.estado === 'pendiente').length}
+                            {requests.filter(r => r.estatus === 'pendiente').length}
                         </div>
                         <div className="text-sm text-gray-600">Pendientes</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow">
                         <div className="text-2xl font-bold text-green-600">
-                            {requests.filter(r => r.estado === 'aprobada').length}
+                            {requests.filter(r => r.estatus === 'aprobada').length}
                         </div>
                         <div className="text-sm text-gray-600">Aprobadas</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow">
                         <div className="text-2xl font-bold text-blue-600">
-                            {requests.filter(r => r.estado === 'entregada').length}
+                            {requests.filter(r => r.estatus === 'entregada').length}
                         </div>
                         <div className="text-sm text-gray-600">Entregadas</div>
                     </div>
@@ -141,7 +141,7 @@ const MyRequests = () => {
                                             <h3 className="text-xl font-bold text-gray-900">
                                                 {request.nombre_medicamento}
                                             </h3>
-                                            {getStatusBadge(request.estado)}
+                                            {getStatusBadge(request.estatus)}
                                             {request.tipo_medicamento === 'con_receta' && (
                                                 <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
                                                     ⚕️ Con Receta
@@ -172,21 +172,21 @@ const MyRequests = () => {
                                         </div>
 
                                         {/* Status Messages */}
-                                        {request.estado === 'aprobada' && (
+                                        {request.estatus === 'aprobada' && (
                                             <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded">
                                                 <p className="text-sm text-green-800">
                                                     ✅ Tu solicitud ha sido aprobada. Espera instrucciones sobre cómo recoger tu medicamento.
                                                 </p>
                                             </div>
                                         )}
-                                        {request.estado === 'rechazada' && (
+                                        {request.estatus === 'rechazada' && (
                                             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded">
                                                 <p className="text-sm text-red-800">
                                                     ❌ Tu solicitud fue rechazada. Por favor contacta al administrador para más información.
                                                 </p>
                                             </div>
                                         )}
-                                        {request.estado === 'entregada' && (
+                                        {request.estatus === 'entregada' && (
                                             <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
                                                 <p className="text-sm text-blue-800">
                                                     📦 Medicamento entregado exitosamente. ¡Gracias por usar AidMeds!

@@ -28,9 +28,9 @@ const AdminDashboard = () => {
 
             setStats({
                 totalDonations: donations.donaciones?.length || 0,
-                pendingDonations: donations.donaciones?.filter(d => d.estado === 'pendiente').length || 0,
+                pendingDonations: donations.donaciones?.filter(d => d.estatus === 'pendiente').length || 0,
                 totalRequests: requests.solicitudes?.length || 0,
-                pendingRequests: requests.solicitudes?.filter(r => r.estado === 'pendiente').length || 0,
+                pendingRequests: requests.solicitudes?.filter(r => r.estatus === 'pendiente').length || 0,
                 totalMedicines: medicines.medicamentos?.length || 0
             });
         } catch (error) {
@@ -159,7 +159,7 @@ const DonationsManager = ({ onUpdate }) => {
             if (response.success) {
                 const filtered = filter === 'todas' 
                     ? response.donaciones 
-                    : response.donaciones.filter(d => d.estado === filter);
+                    : response.donaciones.filter(d => d.estatus === filter);
                 setDonations(filtered);
             }
         } catch (error) {
@@ -219,8 +219,8 @@ const DonationsManager = ({ onUpdate }) => {
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 mb-2">
                                         <h3 className="text-lg font-bold">{donation.nombre_medicamento}</h3>
-                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(donation.estado)}`}>
-                                            {donation.estado}
+                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(donation.estatus)}`}>
+                                            {donation.estatus}
                                         </span>
                                     </div>
                                     <div className="grid md:grid-cols-4 gap-4 text-sm text-gray-600 mt-2">
@@ -236,7 +236,7 @@ const DonationsManager = ({ onUpdate }) => {
                                         <img src={donation.imagen_url} alt="Medicamento" className="mt-3 h-24 w-24 object-cover rounded" />
                                     )}
                                 </div>
-                                {donation.estado === 'pendiente' && (
+                                {donation.estatus === 'pendiente' && (
                                     <div className="flex gap-2 ml-4">
                                         <button
                                             onClick={() => handleStatusChange(donation.id_donacion, 'aprobada')}
@@ -252,7 +252,7 @@ const DonationsManager = ({ onUpdate }) => {
                                         </button>
                                     </div>
                                 )}
-                                {donation.estado === 'aprobada' && (
+                                {donation.estatus === 'aprobada' && (
                                     <button
                                         onClick={() => handleStatusChange(donation.id_donacion, 'entregada')}
                                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 ml-4"
@@ -289,7 +289,7 @@ const RequestsManager = ({ onUpdate }) => {
             if (response.success) {
                 const filtered = filter === 'todas' 
                     ? response.solicitudes 
-                    : response.solicitudes.filter(r => r.estado === filter);
+                    : response.solicitudes.filter(r => r.estatus === filter);
                 setRequests(filtered);
             }
         } catch (error) {
@@ -349,8 +349,8 @@ const RequestsManager = ({ onUpdate }) => {
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 mb-2">
                                         <h3 className="text-lg font-bold">{request.nombre_medicamento}</h3>
-                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(request.estado)}`}>
-                                            {request.estado}
+                                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(request.estatus)}`}>
+                                            {request.estatus}
                                         </span>
                                         {request.tipo_medicamento === 'con_receta' && (
                                             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
@@ -372,7 +372,7 @@ const RequestsManager = ({ onUpdate }) => {
                                         )}
                                     </div>
                                 </div>
-                                {request.estado === 'pendiente' && (
+                                {request.estatus === 'pendiente' && (
                                     <div className="flex gap-2 ml-4">
                                         <button
                                             onClick={() => handleStatusChange(request.id_solicitud, 'aprobada')}
@@ -388,7 +388,7 @@ const RequestsManager = ({ onUpdate }) => {
                                         </button>
                                     </div>
                                 )}
-                                {request.estado === 'aprobada' && (
+                                {request.estatus === 'aprobada' && (
                                     <button
                                         onClick={() => handleStatusChange(request.id_solicitud, 'entregada')}
                                         className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 ml-4"

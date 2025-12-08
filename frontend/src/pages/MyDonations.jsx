@@ -112,19 +112,19 @@ const MyDonations = () => {
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow">
                         <div className="text-2xl font-bold text-yellow-600">
-                            {donations.filter(d => d.estado === 'pendiente').length}
+                            {donations.filter(d => d.estatus === 'pendiente').length}
                         </div>
                         <div className="text-sm text-gray-600">Pendientes</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow">
                         <div className="text-2xl font-bold text-green-600">
-                            {donations.filter(d => d.estado === 'aprobada').length}
+                            {donations.filter(d => d.estatus === 'aprobada').length}
                         </div>
                         <div className="text-sm text-gray-600">Aprobadas</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow">
                         <div className="text-2xl font-bold text-blue-600">
-                            {donations.filter(d => d.estado === 'entregada').length}
+                            {donations.filter(d => d.estatus === 'entregada').length}
                         </div>
                         <div className="text-sm text-gray-600">Entregadas</div>
                     </div>
@@ -141,7 +141,7 @@ const MyDonations = () => {
                                             <h3 className="text-xl font-bold text-gray-900">
                                                 {donation.nombre_medicamento}
                                             </h3>
-                                            {getStatusBadge(donation.estado)}
+                                            {getStatusBadge(donation.estatus)}
                                         </div>
                                         
                                         <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600 mt-4">
