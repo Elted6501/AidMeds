@@ -148,18 +148,30 @@ const DonationsManager = ({ onUpdate }) => {
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('pendiente');
+    const [donorSearch, setDonorSearch] = useState('');
 
     useEffect(() => {
         loadDonations();
-    }, [filter]);
+    }, [filter, donorSearch]);
 
     const loadDonations = async () => {
         try {
             const response = await donationService.getAll();
             if (response.success) {
-                const filtered = filter === 'todas' 
-                    ? response.donaciones 
-                    : response.donaciones.filter(d => d.estatus === filter);
+                // Aplicar filtros
+                let filtered = response.donaciones;
+                
+                if (filter !== 'todas') {
+                    filtered = filtered.filter(d => d.estatus === filter);
+                }
+                
+                if (donorSearch.trim()) {
+                    const searchLower = donorSearch.toLowerCase();
+                    filtered = filtered.filter(d => 
+                        `${d.nombre_usuario} ${d.apellido_usuario}`.toLowerCase().includes(searchLower)
+                    );
+                }
+                
                 setDonations(filtered);
             }
         } catch (error) {
@@ -172,10 +184,16 @@ const DonationsManager = ({ onUpdate }) => {
     const handleStatusChange = async (id, newStatus) => {
         try {
             await donationService.updateStatus(id, newStatus);
-            loadDonations();
-            onUpdate();
+            await loadDonations();
+            await onUpdate();
+            
+            // Show success message
+            const statusText = newStatus === 'aprobada' || newStatus === 'aceptada' ? 'aceptada' : 
+                             newStatus === 'rechazada' ? 'rechazada' : 'actualizada';
+            alert(`Donación ${statusText} correctamente`);
         } catch (error) {
             console.error('Error al actualizar estado:', error);
+            alert('Error al actualizar el estado de la donación');
         }
     };
 
@@ -195,7 +213,7 @@ const DonationsManager = ({ onUpdate }) => {
     return (
         <div>
             {/* Filter */}
-            <div className="mb-6">
+            <div className="mb-6 flex gap-4">
                 <select
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
@@ -206,6 +224,14 @@ const DonationsManager = ({ onUpdate }) => {
                     <option value="rechazada">Rechazadas</option>
                     <option value="todas">Todas</option>
                 </select>
+
+                <input
+                    type="text"
+                    value={donorSearch}
+                    onChange={(e) => setDonorSearch(e.target.value)}
+                    placeholder="Buscar por donante..."
+                    className="px-4 py-2 border border-gray-300 rounded-md flex-1"
+                />
             </div>
 
             {/* Donations List */}

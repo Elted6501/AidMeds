@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 
 export const getAllDonations = async (req, res) => {
     try {
-        const { estatus } = req.query;
+        const { estatus, id_donante } = req.query;
         const filters = {};
 
         // Si es user, solo ve sus donaciones
@@ -14,6 +14,11 @@ export const getAllDonations = async (req, res) => {
 
         if (estatus) {
             filters.estatus = estatus;
+        }
+
+        // Filtro por donante (solo para admin)
+        if (id_donante && (req.user.rol === 'admin' || req.user.rol === 'super_admin')) {
+            filters.id_donante = parseInt(id_donante);
         }
 
         const donaciones = await Donacion.findAll(filters);
