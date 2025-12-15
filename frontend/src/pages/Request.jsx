@@ -70,7 +70,7 @@ const Request = () => {
 
             const formDataToSend = new FormData();
             formDataToSend.append('id_medicamento', formData.id_medicamento);
-            formDataToSend.append('cantidad', formData.cantidad);
+            formDataToSend.append('cantidad_solicitada', formData.cantidad);
             if (formData.receta) {
                 formDataToSend.append('receta', formData.receta);
             }
